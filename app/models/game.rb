@@ -29,7 +29,7 @@ class Game < ActiveRecord::Base
     # Date.today >= assignment_start && Date.today <= assignment_end
   # end
 #   
-  # def game_phase?
+  # def game_phase?1
     # Date.today >= game_start && Date.today <= game_end
   # end
 #   
