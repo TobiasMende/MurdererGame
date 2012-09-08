@@ -1,0 +1,33 @@
+%h1 Registrieren
+= form_for @user do |f|
+  - if @user.errors.any?
+    %h2 Formular ungültig
+    %ul
+      - for message in @user.errors.full_messages
+        %li= message
+  .form_row
+    = f.label :first_name
+    .field= f.text_field :first_name
+  .form_row
+    = f.label :last_name
+    .field= f.text_field :last_name
+  .form_row
+    = f.label :course
+    .field= f.select :course, User::COURSES, prompt: "Bitte auswählen:"
+  .form_row
+    = f.label :image
+    .field= f.file_field :image
+  .form_row
+    = f.label :email
+    .field= f.email_field :email
+  .form_row
+    = f.label :email_confirmation
+    .field= f.email_field :email_confirmation
+  .form_row
+    = f.label :password
+    .field= f.password_field :password, required: true
+  .form_row
+    = f.label :password_confirmation
+    .field= f.password_field :password_confirmation
+  .form_submit
+    = f.submit "Registrieren"

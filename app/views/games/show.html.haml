@@ -1,0 +1,18 @@
+%h1= @game.title
+- if @game.joinable?(@cu)
+  %p
+    = link_to "Teilnehmen", new_assignment_path(@game)
+  
+%p
+  %strong Spielstart:
+  = I18n.localize(@game.game_start)
+  %br
+  - if @game.started?
+    %strong Teilnehmer:
+    = @game.assignments.count
+  - else
+    %strong Freie Plätze:
+    = @game.free_places
+      
+%p
+  = @game.description

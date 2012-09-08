@@ -1,0 +1,17 @@
+%h1 Ausstehende Spiele
+%table.games
+  %thead
+    %tr
+      %td Titel
+      %td Spielstart
+      %td Erfordert Annahme?
+      %td Freie Plätze
+      %td
+  - @games.each do |g|
+    %tr
+      %td= link_to g.title, game_path(g)
+      %td= g.game_start
+      %td= g.needs_confirmation
+      %td= g.free_places
+      %td= link_to "Anzeigen", game_path(g)
+    

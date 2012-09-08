@@ -1,0 +1,44 @@
+#error {
+   color: #D8000C;
+  background-color: #FFBABA;
+}
+
+#notice {
+  color: #4F8A10;
+  background-color: #DFF2BF;
+}
+
+$label_width: 150px;
+
+.form_row {
+  clear: both;
+  label {
+    display: block;
+    float: left;
+    width: $label_width;
+    font-weight: bold;
+    text-align:right;
+    padding-right: 20px;
+  }
+  .field {
+    display: block;
+  }
+  
+  .field_with_errors {
+    display:inline;
+    background: none!important;
+    
+    label {
+      color: #D8000C;
+    }
+    
+    input, select {
+      background-color: lighten(#D8000C, 40%);
+    }
+  }
+}
+
+.form_submit input{
+  margin-left: $label_width + 20px;
+  
+}

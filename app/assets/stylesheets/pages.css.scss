@@ -1,0 +1,19 @@
+// Place all the styles related to the pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#short_info {
+  position: relative;
+  height: 100px;
+  clear:both;
+  width: 100%;
+  
+  #thumb {
+    float:left;
+    width: 150px;
+    height: 100px;
+  }
+  
+  #info {
+    float:left;
+  }
+}

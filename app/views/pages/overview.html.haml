@@ -1,0 +1,24 @@
+%h1 Hallo #{@current_user.first_name}
+#short_info
+  #thumb
+    = image_tag @current_user.image.url(:thumb)
+  #info
+    = @current_user.name
+    %br
+    = @current_user.email
+    %br
+    = User::COURSES.select{|key, value| value == @current_user.course}.first[0]
+    %br
+    = #link_to "Bearbeiten", edit_user_path(@current_user)
+
+%h2 Deine Spiele
+- if @own_games.empty?
+  %p 
+    Du nimmst zur Zeit an keinen Spielen teil.
+    %br
+    = link_to "Wähle jetzt ein Spiel aus", :open_games
+- else
+  %table
+    %thead
+      %tr
+        %td Titel

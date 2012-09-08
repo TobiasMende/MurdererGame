@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  description: MyText
+  assignment_start: 2012-09-08
+  assignment_end: 2012-09-08
+  game_start: 2012-09-08
+  game_end: 2012-09-08
+  min_player: 1
+  max_player: 1
+  needs_confirmation: false
+
+two:
+  title: MyString
+  description: MyText
+  assignment_start: 2012-09-08
+  assignment_end: 2012-09-08
+  game_start: 2012-09-08
+  game_end: 2012-09-08
+  min_player: 1
+  max_player: 1
+  needs_confirmation: false
