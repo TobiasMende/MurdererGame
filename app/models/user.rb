@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
   end
   
   def current_games
-    games.where("game_start <= ? AND (game_end >= ? OR game_end IN (NULL))", Date.today, Date.today)
+    games.where("game_start <= ? AND (game_end >= ? OR game_end IS NULL)", Date.today, Date.today)
   end
   
   def finished_games

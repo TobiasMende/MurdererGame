@@ -14,8 +14,7 @@ class SessionsController < ApplicationController
     user.update_column("last_login", DateTime.now)
     redirect_to :overview, :notice => "Eingeloggt!"
   else
-    flash.now.error = "Password oder E-Mail sind ungültig"
-    render "new"
+    redirect_to sessions_new_path, error: "Password oder E-Mail sind ungültig"
   end
 end
 

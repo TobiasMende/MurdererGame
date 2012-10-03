@@ -43,6 +43,7 @@ class UsersController < ApplicationController
       flash[:error] = "Du kannst nur dich selbst editieren!"
       redirect_to :back
     end
+    
   end
 
   # POST /users
@@ -53,7 +54,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         session[:user_id] = @user.id
-        format.html { redirect_to :overview, notice: 'Die Registrierung war erfolgreich..' }
+        format.html { redirect_to :overview, notice: 'Die Registrierung war erfolgreich.' }
         format.json { render json: :overview, status: :created, location: :overview }
       else
         format.html { render action: "new" }

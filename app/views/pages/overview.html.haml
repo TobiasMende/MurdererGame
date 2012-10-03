@@ -9,7 +9,7 @@
     %br
     = @current_user.long_course+" ("+@current_user.term.to_s+". Semester)"
     %br
-    = #link_to "Bearbeiten", edit_user_path(@current_user)
+    = link_to "Profil bearbeiten", edit_user_path(@current_user)
 
 %h2 Deine Spiele
 - if @own_games.empty?
