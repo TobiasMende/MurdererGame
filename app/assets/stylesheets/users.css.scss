@@ -3,3 +3,30 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
+.user_image {
+  float: left;
+  width: 300px;
+}
+
+.user_info {
+  float:left;
+  width: 400px;
+  margin-left: 10px;
+}
+
+#user_activities {
+  clear:both;
+  
+  .section {
+    width: 33%;
+    float: left;
+  }
+  
+  #current_games {
+    
+  }
+  
+  #finished_games {
+    
+  }
+}
