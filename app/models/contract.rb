@@ -3,7 +3,4 @@ class Contract < ActiveRecord::Base
   belongs_to :game
   belongs_to :murderer, class_name: "User"
   belongs_to :victim, class_name: "User"
-  
-  
-  
 end

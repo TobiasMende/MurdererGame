@@ -16,6 +16,17 @@
       - @game.users.each do |user|
         %li 
           = link_to user.name, user
+    %br
+    %strong Deine offenen Mordaufträge:
+    %ul
+      - @cu.open_kill_contracts_for_game(@game).each do |contract|
+        %li
+          = link_to contract.victim.name, contract.victim
+    %strong Deine abgeschlossenen Mordaufträge:
+    %ul
+      - @cu.proved_kill_contracts_for_game(@game).each do |contract|
+        %li
+          = link_to contract.murder.name, contract.murder
     - else
     %strong Freie Plätze:
     = @game.free_places
