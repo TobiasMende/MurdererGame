@@ -16,7 +16,7 @@
       - @game.users.each do |user|
         %li 
           = link_to user.name, user
-  - else
+    - else
     %strong Freie Plätze:
     = @game.free_places
       
