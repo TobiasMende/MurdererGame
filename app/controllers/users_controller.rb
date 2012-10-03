@@ -1,7 +1,5 @@
 class UsersController < ApplicationController
   skip_before_filter :require_login, :only => [:new, :create]
-   before_filter :skip_password_attribute, only: :update
-  before_filter :skip_email_attribute, only: :update
   # GET /users
   # GET /users.json
   def index
@@ -71,7 +69,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
 
     respond_to do |format|
-      if @user.update_attributes(params[:user])
+      if @user.update_without_confirmation(params[:user])
         format.html { redirect_to @user, notice: 'Erfolgreich gespeichert!' }
         format.json { head :no_content }
       else
@@ -93,16 +91,5 @@ class UsersController < ApplicationController
     end
   end
   
-   private
-  def skip_password_attribute
-    if params[:password].blank? && params[:password_confirmation].blank?
-      params.except!(:password, :password_confirmation)
-    end
-  end
-  def skip_email_attribute
-    if params[:email].blank? || params[:email_confirmation].blank?
-      params.except!(:email, :email_confirmation)
-    end
-  end
   
 end

@@ -24,10 +24,10 @@
     .field= f.email_field :email
   .form_row
     = f.label :email_confirmation
-    .field= f.email_field :email_confirmation
+    .field= f.email_field :email_confirmation, required: false
   .form_row
     = f.label :password
-    .field= f.password_field :password, required: true
+    .field= f.password_field :password, required: false
   .form_row
     = f.label :password_confirmation
     .field= f.password_field :password_confirmation

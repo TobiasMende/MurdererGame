@@ -67,5 +67,12 @@ class User < ActiveRecord::Base
     User::COURSES.select{|key, value| value == course}.first[0]
   end
   
+  def update_without_confirmation(params={})
+    params.delete(:password) if params[:password_confirmation].blank?
+    params.delete(:password_confirmation) if params[:password].blank?
+    params.delete(:email) if params[:email_confirmation].blank?
+    params.delete(:email_confirmation) if params[:email_confirmation].blank?
+    update_attributes(params)
+   end
 
 end
