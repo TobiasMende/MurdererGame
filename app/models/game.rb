@@ -23,6 +23,7 @@ class Game < ActiveRecord::Base
     max_player - assignments.count
   end
   
+  
   def joinable?(user)
     (free_places != 0 && !started? && users.where("user_id = ?", user).empty?)
   end

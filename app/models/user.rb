@@ -1,3 +1,4 @@
+#encoding: utf-8
 class User < ActiveRecord::Base
   COURSES = {"Informatik" => "Inf", "Molecular Life Science" => "MLS", "Medizin" => "Med", "Biomedical Engineering" => "BME", "Infection Biology" => "InfBio", "Medizinische Informatik" => "MI", "Medizinische Ingeneurwissenschaften" => "MIW", "Mathematik in Medizin und Lebenswissenschaften" => "MML"}.sort
   has_many :assignments
@@ -58,6 +59,10 @@ class User < ActiveRecord::Base
     kill_contracts.where("proved_at IS NOT NULL")
   end
   
+  def proved_victim_contracts
+    victim_contracts.where("proved_at IS NOT NULL")
+  end
+  
   def current_victim_contracts
     victim_contracts.includes(:game).where("proved_at IS NULL").where("games.game_end >= ? OR games.game_end IS NULL", Date.today)
   end
@@ -70,12 +75,24 @@ class User < ActiveRecord::Base
     proved_kill_contracts.where("game_id = ?", game)
   end
   
+  def proved_victim_contracts_for_game(game)
+    proved_victim_contracts.where("game_id = ?",game)
+  end
+  
   def finished_games
     games.where("game_end < ?", Date.today)
   end
   
   def future_games
     games.where("game_start > ?", Date.today)
+  end
+  
+  def status_in_game(game)
+    if proved_victim_contracts_for_game(game).empty?
+      "lebendig"
+    else
+      "getötet"
+    end
   end
   
   def long_course

@@ -12,6 +12,14 @@
   float:left;
   width: 400px;
   margin-left: 10px;
+  
+  table tr {
+    
+      :first-child {
+      font-weight:bold;
+      padding-right:10px;
+    }
+  }
 }
 
 #user_activities {

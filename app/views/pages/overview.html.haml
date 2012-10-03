@@ -11,8 +11,8 @@
     %br
     = link_to "Profil bearbeiten", edit_user_path(@current_user)
 
-%h2 Deine Spiele
-- if @own_games.empty?
+%h2 Laufende Spiele
+- if @current_games.empty?
   %p 
     Du nimmst zur Zeit an keinen Spielen teil.
     %br
@@ -22,9 +22,62 @@
     %thead
       %tr
         %th Titel
-        %th Spielstart
-        %th Erfordert Annahme?
+        %th Startdatum
+        %th Enddatum
+        %th Teilnehmer
+        %th Eigener Status
+        %th
+    - @current_games.each do |game|
+      %tr
+        %td= link_to game.title, game
+        %td= I18n.localize(game.game_start)
+        %td= game.game_end.nil? ? "unbekannt" : I18n.localize(game.game_end)
+        %td= game.users.count
+        %td= @current_user.status_in_game(game)
+        %td= link_to "Anzeigen", game
+%h2 Anstehende Spiele
+-if @future_games.empty?
+  %p 
+    Es stehen keine Spiele aus.
+    %br
+    = link_to "Wähle jetzt ein Spiel aus", :open_games
+- else
+  %table.games
+    %thead
+      %tr
+        %th Titel
+        %th Bewerbungsschluss
+        %th Startdatum
+        %th Enddatum
+        %th Teilnehmer
         %th Freie Plätze
         %th
-    - @own_games.each do |game|
-      = render :partial  => "games/item", :locals => {game: game}
+    - @future_games.each do |game|
+      %tr
+        %td= link_to game.title, game
+        %td= game.assignment_end.nil? ? "offen" : I18n.localize(game.assignment_end)
+        %td= I18n.localize(game.game_start)
+        %td= game.game_end.nil? ? "unbekannt" : I18n.localize(game.game_end)
+        %td= game.users.count
+        %td= game.free_places
+        %td= link_to "Anzeigen", game
+    
+-if !@finished_games.empty?
+  %h2 Beendete Spiele
+  %table.games
+    %thead
+      %tr
+        %th Titel
+        %th Enddatum
+        %th Teilnehmer
+        %th Deine Morde
+        %th Morde gesamt
+        %th
+    - @finished_games.each do |game|
+      %tr
+        %td= link_to game.title, game
+        %td= I18n.localize(game.game_end)
+        %td= game.users.count
+        %td= @current_user.proved_kill_contracts_for_game(game).count
+        %td= game.proved_contracts.count
+  
