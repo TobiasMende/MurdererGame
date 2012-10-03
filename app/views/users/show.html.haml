@@ -4,8 +4,10 @@
   %p
     = @user.long_course+" ("+@user.term.to_s+". Semester)"
     %br
-    %strong Letzter Login:
-    = " "+I18n.localize(@user.last_login.to_date)+" um "+@user.last_login.hour.to_s+":"+@user.last_login.min.to_s+" Uhr"
+    - if !@user.last_login.nil?
+      %strong Letzter Login:
+      = " "+I18n.localize(@user.last_login.to_date)+" um "+@user.last_login.hour.to_s+":"+@user.last_login.min.to_s+" Uhr"
+      %br
     
 #user_activities
   #future_games.section

@@ -3,7 +3,7 @@
   #thumb
     = image_tag @current_user.image.url(:thumb)
   #info
-    = @current_user.name
+    = link_to @current_user.name, @current_user
     %br
     = @current_user.email
     %br
