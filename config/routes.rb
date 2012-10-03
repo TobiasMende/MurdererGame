@@ -3,11 +3,7 @@ MurdererGame::Application.routes.draw do
   get "index" => "pages#index", :as => "index"
   get "overview" => "pages#overview", :as => "overview"
   
-  get "games/index"
-  get "games/create"
-  get "games/new"
-  get "games/destroy"
-  get "games/show"
+
   get "games/open", :as => "open_games"
   get "games/:id/assign" => "games#assign", as: "new_assignment"
   

@@ -1,6 +1,8 @@
 #encoding: utf-8
 class GamesController < ApplicationController
+  helper_method :sort_column, :sort_direction
   def index
+    @games = Game.order(sort_column + " " + sort_direction)
   end
 
   def create
@@ -14,6 +16,7 @@ class GamesController < ApplicationController
 
  def show
     @game = Game.find(params[:id])
+    @cu = current_user
 
     respond_to do |format|
       format.html # show.html.erb
@@ -22,19 +25,19 @@ class GamesController < ApplicationController
   end
   
   def open
-    @games = Game.open_games
+    @games = Game.open_games.order(sort_column + " " + sort_direction)
     @cu = current_user
   end
   
   def assign
     @game = Game.find(params[:id])
-    if !@game.joinable?
+    if !@game.joinable?(current_user)
       flash[:error] = "Teilnahme ist nicht mehr möglich!"
       redirect_to :back
     end
     a = Assignment.new
-    a.user_id = current_user
-    a.game_id = @game
+    a.user = current_user
+    a.game = @game
     
     if a.save
       flash[:notice] = "Teilnahme erfolgreich!"
@@ -45,5 +48,14 @@ class GamesController < ApplicationController
       # format.html # show.html.erb
       # format.json { render json: @game }
     # end
+  end
+  
+  private
+  def sort_column
+    Game.column_names.include?(params[:sort]) ? params[:sort] : "game_start"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end

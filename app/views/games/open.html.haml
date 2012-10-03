@@ -2,16 +2,16 @@
 %table.games
   %thead
     %tr
-      %td Titel
-      %td Spielstart
-      %td Erfordert Annahme?
-      %td Freie Plätze
-      %td
+      %th= sortable "title", "Titel"
+      %th= sortable "game_start", "Spielstart"
+      %th= sortable "needs_confirmation", "Erfordert Annahme?"
+      %th= sortable "free_places", "Freie Plätze"
+      %th
   - @games.each do |g|
     %tr
       %td= link_to g.title, game_path(g)
-      %td= g.game_start
-      %td= g.needs_confirmation
+      %td= I18n.localize(g.game_start)
+      %td= g.needs_confirmation? ? "Ja" : "Nein"
       %td= g.free_places
       %td= link_to "Anzeigen", game_path(g)
     
