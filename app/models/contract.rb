@@ -4,6 +4,8 @@ class Contract < ActiveRecord::Base
   belongs_to :murderer, class_name: "User"
   belongs_to :victim, class_name: "User"
   
-  
-  
+  validates_uniqueness_of :murderer_id, :scope => [:game_id, :victim_id]
+  validates_presence_of :game_id
+  validates_presence_of :victim_id
+  validates_presence_of :murderer_id  
 end
