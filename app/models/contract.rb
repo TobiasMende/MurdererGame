@@ -8,10 +8,5 @@ class Contract < ActiveRecord::Base
   validates_presence_of :game_id
   validates_presence_of :victim_id
   validates_presence_of :murderer_id  
-  
-  def execute
-    executed_at = DateTime.now
-    #TODO email to victim
-  end
-  
-end
+ 
+ end
