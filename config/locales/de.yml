@@ -212,5 +212,6 @@ de:
         first_name: "Vorname"
         last_name: "Nachname"
         course: "Studiengang"
+        term: "Semester"
         image: "Profilbild"
         

@@ -4,6 +4,9 @@ class User < ActiveRecord::Base
   has_many :games, through: :assignments
   has_many :kill_contracts, :foreign_key => :murderer_id, class_name: "Contract"
   has_many :victim_contracts, :foreign_key => :victim_id, class_name: "Contract"
+  has_many :victims, :through => :kill_contracts, :foreign_key => :murderer_id
+  has_many :murderers, :through => :victim_contracts, :foreign_key => :victim_id
+  
   
   
   attr_accessor :password
@@ -20,7 +23,7 @@ class User < ActiveRecord::Base
   validates_presence_of :password, :on => :create
   validates_confirmation_of :password
   validates_uniqueness_of :email
-  validates :term, presence: true, numericality: {greater_than: 0} 
+  validates :term, presence: true, numericality: {greater_than_or_equal: 1, only_integer: true} 
   
   
    def self.authenticate(email, password)
@@ -51,8 +54,20 @@ class User < ActiveRecord::Base
     kill_contracts.where("proved_at IS NULL")
   end
   
+  def proved_kill_contracts
+    kill_contracts.where("proved IS NOT NULL")
+  end
+  
   def current_victim_contracts
     victim_contracts.where("proved_at IS NULL")
+  end
+  
+  def open_kill_contracts_for_game(game)
+    current_kill_contracts.where("game_id = ?", game)
+  end
+  
+  def proved_kill_contracts_for_game(game)
+    proved_kill_contracts.where("game_id = ?", game)
   end
   
   def finished_games
