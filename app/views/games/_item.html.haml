@@ -1,0 +1,10 @@
+%tr
+  %td= link_to game.title, game
+  %td= I18n.localize(game.game_start)
+  %td= game.needs_confirmation? ? "Ja" : "Nein"
+  %td
+    - if game.started?
+      = "Spiel bereits gestartet"
+    - else
+      = game.free_places
+  %td= link_to "Anzeigen", game

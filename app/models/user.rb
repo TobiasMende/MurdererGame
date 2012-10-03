@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   attr_accessor :password
   before_save :encrypt_password
   
-  attr_accessible :course, :email, :first_name, :image, :last_name, :password, :password_confirmation, :email_confirmation
+  attr_accessible :course, :email, :first_name, :image, :last_name, :password, :password_confirmation, :email_confirmation, :term
   has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>" }
   validates_presence_of :first_name
   validates_presence_of :last_name
@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password
   validates_presence_of :password, :on => :create
   validates_uniqueness_of :email
+  validates :term, presence: true, numericality: {greater_than: 0} 
+  
   
    def self.authenticate(email, password)
     user = find_by_email(email)
