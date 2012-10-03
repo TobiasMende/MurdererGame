@@ -51,15 +51,15 @@ class User < ActiveRecord::Base
   end
   
   def current_kill_contracts
-    kill_contracts.where("proved_at IS NULL")
+    kill_contracts.includes(:game).where("proved_at IS NULL").where("games.game_end >= ? OR game.game_end IS NULL", Date.today)
   end
   
   def proved_kill_contracts
-    kill_contracts.includes(:game).where("proved_at IS NOT NULL").where("games.game_end IS NULL")
+    kill_contracts.where("proved_at IS NOT NULL")
   end
   
   def current_victim_contracts
-    victim_contracts.includes(:game).where("proved_at IS NULL").where("games.game_end IS NULL")
+    victim_contracts.includes(:game).where("proved_at IS NULL").where("games.game_end >= ? OR game.game_end IS NULL", Date.today)
   end
   
   def open_kill_contracts_for_game(game)
