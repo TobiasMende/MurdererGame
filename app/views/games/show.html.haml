@@ -25,6 +25,7 @@
       - @cu.open_kill_contracts_for_game(@game).each do |contract|
         %li
           = link_to contract.victim.name, contract.victim
+          = link_to "Kill melden!", new_execution_path(contract), confirm:"Bist du sicher?"
     %strong Deine abgeschlossenen Mordaufträge:
     %ul
       - @cu.proved_kill_contracts_for_game(@game).each do |contract|
