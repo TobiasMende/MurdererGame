@@ -2,6 +2,7 @@
 class Game < ActiveRecord::Base
   has_many :assignments
   has_many :users, through: :assignments
+  has_many :contracts
   
   attr_accessible :assignment_end, :assignment_start, :description, :game_end, :game_start, :max_player, :min_player, :needs_confirmation, :title, :free_places
   attr_accessor :free_places
