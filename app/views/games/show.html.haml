@@ -30,6 +30,16 @@
       - @cu.proved_kill_contracts_for_game(@game).each do |contract|
         %li
           = link_to contract.victim.name, contract.victim
+    
+    %strong Todesliste: 
+    %ul
+      - @game.proved_contracts.each do |contract|
+        %li
+          = link_to contract.murderer.name, contract.murderer
+          hat am
+          = I18n.localize(contract.executed_at.to_date)
+          = link_to contract.victim.name, contract.victim
+          getötet
     - else
     %strong Freie Plätze:
     = @game.free_places
