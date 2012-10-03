@@ -1,1 +1,20 @@
 %h1= @user.name
+.user_image= link_to(image_tag(@user.image.url(:medium)), @user.image.url(:original), class: "top_up")
+.user_info
+  %p
+    = @user.long_course+" ("+@user.term.to_s+". Semester)"
+    %br
+    %strong Letzter Login:
+    = " "+I18n.localize(@user.last_login.to_date)+" um "+@user.last_login.hour.to_s+":"+@user.last_login.min.to_s+" Uhr"
+    
+#user_activities
+  #future_games.section
+    %h2 Kommende Spiele
+    = render :partial => "games/list", locals: {games: @user.future_games}
+  #current_games.section
+    %h2 Laufende Spiele
+    = render :partial => "games/list", locals: {games: @user.current_games}
+  #finished_games.section
+    %h2 Vorherige Spiele
+    = render :partial => "games/list", locals: {games: @user.finished_games}
+  

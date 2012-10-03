@@ -1,13 +1,13 @@
 %h1 Ausstehende Spiele
- %table.games
-    %thead
-      %tr
-        %th= sortable "title", "Titel"
-        %th= sortable "game_start", "Spielstart"
-        %th= sortable "needs_confirmation", "Erfordert Annahme?"
-        %th= sortable "free_places", "Freie Plätze"
-        %th
-    - @games.each do |game|
-      = render :partial => "item", :locals => {game: game}
-    
+%table.games
+  %thead
+    %tr
+      %th= sortable "title", "Titel"
+      %th= sortable "game_start", "Spielstart"
+      %th= sortable "needs_confirmation", "Erfordert Annahme?"
+      %th= sortable "free_places", "Freie Plätze"
+      %th
+  - @games.each do |game|
+    = render :partial => "item", :locals => {game: game}
+  
  

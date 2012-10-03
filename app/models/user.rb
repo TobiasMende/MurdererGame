@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
   attr_accessor :password
   before_save :encrypt_password
   
-  attr_accessible :course, :email, :first_name, :image, :last_name, :password, :password_confirmation, :email_confirmation, :term
-  has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>" }
+  attr_accessible :course, :email, :first_name, :image, :last_name, :password, :password_confirmation, :email_confirmation, :term, :last_login
+  has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>", :large => "800x600" }
   validates_presence_of :first_name
   validates_presence_of :last_name
   validates_presence_of :course
@@ -43,5 +43,17 @@ class User < ActiveRecord::Base
   
   def current_games
     games.where("game_start <= ? AND game_end >= ?", Date.today, Date.today)
+  end
+  
+  def finished_games
+    games.where("game_end < ?", Date.today)
+  end
+  
+  def future_games
+    games.where("game_start > ?", Date.today)
+  end
+  
+  def long_course
+    User::COURSES.select{|key, value| value == course}.first[0]
   end
 end
