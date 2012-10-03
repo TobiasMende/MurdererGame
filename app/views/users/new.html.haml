@@ -15,6 +15,9 @@
     = f.label :course
     .field= f.select :course, User::COURSES, prompt: "Bitte auswählen:"
   .form_row
+    = f.label :term
+    .field= f.field :term
+  .form_row
     = f.label :image
     .field= f.file_field :image
   .form_row

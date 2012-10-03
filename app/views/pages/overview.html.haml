@@ -18,7 +18,13 @@
     %br
     = link_to "Wähle jetzt ein Spiel aus", :open_games
 - else
-  %table
+  %table.games
     %thead
       %tr
-        %td Titel
+        %th Titel
+        %th Spielstart
+        %th Erfordert Annahme?
+        %th Freie Plätze
+        %th
+    - @own_games.each do |game|
+      = render :partial  => "games/item", :locals => {game: game}

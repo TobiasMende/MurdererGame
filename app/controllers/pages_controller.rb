@@ -8,6 +8,6 @@ class PagesController < ApplicationController
   
   def overview
     @current_user = current_user
-    @own_games = @current_user.current_games
+    @own_games = @current_user.games
   end
 end
