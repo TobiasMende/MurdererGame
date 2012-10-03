@@ -55,11 +55,11 @@ class User < ActiveRecord::Base
   end
   
   def proved_kill_contracts
-    kill_contracts.where("proved IS NOT NULL")
+    kill_contracts.includes(:game).where("proved_at IS NOT NULL").where("games.game_end IS NULL")
   end
   
   def current_victim_contracts
-    victim_contracts.where("proved_at IS NULL")
+    victim_contracts.includes(:game).where("proved_at IS NULL").where("games.game_end IS NULL")
   end
   
   def open_kill_contracts_for_game(game)
