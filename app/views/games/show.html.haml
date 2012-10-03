@@ -8,8 +8,14 @@
   = I18n.localize(@game.game_start)
   %br
   - if @game.started?
-    %strong Teilnehmer:
+    %strong Anzahl der Teilnehmer:
     = @game.assignments.count
+    %br
+    %strong Teilnehmer:
+    %ul
+      - @game.users.each do |user|
+        %li 
+          = link_to user.name, user
   - else
     %strong Freie Plätze:
     = @game.free_places
