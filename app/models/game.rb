@@ -27,6 +27,10 @@ class Game < ActiveRecord::Base
     (free_places != 0 && !started? && users.where("user_id = ?", user).empty?)
   end
   
+  def proved_contracts
+    contracts.where("proved_at <= ?", Date.today)
+  end
+  
   # def assignment_phase?
     # Date.today >= assignment_start && Date.today <= assignment_end
   # end
