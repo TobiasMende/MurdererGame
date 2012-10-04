@@ -109,7 +109,7 @@ class User < ActiveRecord::Base
    end
    
    def destroy
-     assignments.includes(:game).destroy_all("games.game_start > ?", Date.today)
+     assignments.includes(:game).where("games.game_start > ?", Date.today).destroy_all
      current_games.each do |game|
        first = game.open_contracts.where("murderer_id = ?", self).first
        second = game.open_contracts.where("victim_id = ?", self).first
@@ -123,7 +123,7 @@ class User < ActiveRecord::Base
        c.victim=v
        c.save
      end
-     deleted_at = DateTime.now
+     update_attribute("deleted_at", DateTime.now)
    end
 
 end
