@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
   
    def self.authenticate(email, password)
     user = find_by_email(email)
-    if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
+    if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt) && user.deleted_at.nil?
       user
     else
       nil
@@ -106,6 +106,24 @@ class User < ActiveRecord::Base
     params.delete(:email) if params[:email_confirmation].blank?
     params.delete(:email_confirmation) if params[:email_confirmation].blank?
     update_attributes(params)
+   end
+   
+   def destroy
+     assignments.includes(:game).destroy_all("games.game_start > ?", Date.today)
+     current_games.each do |game|
+       first = game.open_contracts.where("murderer_id = ?", self).first
+       second = game.open_contracts.where("victim_id = ?", self).first
+       v = first.victim
+       m = second.murderer
+       first.destroy
+       second.destroy
+       c = Contract.new
+       c.game = game
+       c.murderer = m
+       c.victim=v
+       c.save
+     end
+     deleted_at = DateTime.now
    end
 
 end

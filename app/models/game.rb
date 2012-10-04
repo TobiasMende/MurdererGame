@@ -32,6 +32,10 @@ class Game < ActiveRecord::Base
     contracts.where("proved_at <= ?", Date.today)
   end
   
+  def open_contracts
+    contracts.where("proved_at IS NULL")
+  end
+  
   # def assignment_phase?
     # Date.today >= assignment_start && Date.today <= assignment_end
   # end

@@ -1,2 +1,4 @@
 %h1 Profil editieren
+%p
+  = link_to "Profil löschen", user_path(@user), :method => :delete, confirm: "Möchtest du dein Profil wirklich löschen?"
 = render :partial => "form", locals: {submit_text: "Aktualisieren"}

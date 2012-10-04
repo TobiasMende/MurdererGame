@@ -1,3 +1,4 @@
+#encoding: utf-8
 class UsersController < ApplicationController
   skip_before_filter :require_login, :only => [:new, :create]
   # GET /users
@@ -15,10 +16,13 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
-
     respond_to do |format|
+      if !@user.deleted_at.nil?
+        format.html {render action: "user_deleted"}
+      else
       format.html # show.html.erb
       format.json { render json: @user }
+      end
     end
   end
 
@@ -83,12 +87,12 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user = User.find(params[:id])
-    @user.destroy
-
-    respond_to do |format|
-      format.html { redirect_to users_url }
-      format.json { head :no_content }
-    end
+    if @user == current_user
+      session[:user_id] = nil
+      @user.destroy
+      redirect_to :index, notice: "Dein Account wurde zerstört. Schade, dass du nicht mehr dabei bist."
+     end
+    
   end
   
   
