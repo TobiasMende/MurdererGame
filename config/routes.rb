@@ -6,7 +6,8 @@ MurdererGame::Application.routes.draw do
 
   get "games/open", :as => "open_games"
   get "games/:id/assign" => "games#assign", as: "new_assignment"
-  get "contracts/:id/execute" => "contracts#execute", as: "new_execution"
+  get "contracts/:id/execute" => "contracts#execute", as: "contract_execution"
+  get "contracts/:id/confirm" => "contracts#confirm", as: "contract_confirmation"
   
   get "sessions/new"
   get "log_out" => "sessions#destroy", :as => "log_out"
