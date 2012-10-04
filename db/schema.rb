@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121004005633) do
+ActiveRecord::Schema.define(:version => 20121004012110) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "user_id"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(:version => 20121004005633) do
     t.datetime "image_updated_at"
     t.integer  "term"
     t.datetime "last_login"
-    t.datetime "deletec_at"
+    t.datetime "deleted_at"
   end
 
 end
