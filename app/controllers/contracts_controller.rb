@@ -14,7 +14,9 @@ class ContractsController < ApplicationController
    contract = Contract.find(params[:id])
    if contract.victim == current_user
       contract.proved_at = DateTime.now
-      # TODO create new contract
+      new_contract = contract.victim.remove_from_contractchain_in(contract.game)
+      ContractMailer.contract_accepted(contract, new_contract).deliver
+      redirect_to game(contract.game), notice: "Der Mord wurd bestätigt. Viel Glück beim nächsten Mal."
     else
       redirect_to :overview, error: "Du hast keine Berechtigung, um diesen Mord zu bestätigen."
    end
@@ -26,7 +28,7 @@ class ContractsController < ApplicationController
       contract.executed_at = DateTime.now
       contract.save
       ContractMailer.contract_rejected(contract).deliver
-      redirect_to game(contract.game), notice: "Der Mord wurd zugewiesen. Der Mörder wird per E-Mail benachrichtigt."
+      redirect_to game(contract.game), notice: "Der Mord wurd zurückgewiesen. Der Mörder wird per E-Mail benachrichtigt."
     else
       redirect_to :overview, error: "Du hast keine Berechtigung, um diesen Mord zurückzuweisen."
    end

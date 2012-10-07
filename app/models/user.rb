@@ -121,7 +121,8 @@ class User < ActiveRecord::Base
    def destroy
      assignments.includes(:game).where("games.game_start > ?", Date.today).destroy_all
      current_games.each do |game|
-       remove_From_contractchain_in(game)
+       new_contract = remove_from_contractchain_in(game)
+       ContractMailer.new_contract(new_contract).deliver
      end
      update_attribute("deleted_at", DateTime.now)
    end
@@ -141,6 +142,7 @@ class User < ActiveRecord::Base
       c.murderer = m
       c.victim = v
       c.save
+      c
     end
   end
 
@@ -150,7 +152,8 @@ class User < ActiveRecord::Base
   # This contract then is allready proved.
   def suicide_in(game)
     g = Game.find(game)
-    remove_from_contractchain_in(g)
+    new_contract = remove_from_contractchain_in(game)
+    ContractMailer.new_contract(new_contract).deliver
     c = Contract.new
     c.game = g
     c.murderer = self
