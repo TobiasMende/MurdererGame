@@ -1,0 +1,12 @@
+%p
+  Hallo #{@contract.murderer.name}
+%p
+  Im Spiel 
+  %strong= @contract.game.name
+  hat #{link_to @contract.victim.name, user_url(@contract.victim)} die Ermordung abgelehnt.
+  %br
+  Sollte dies nicht stimmen, wende dich bitte an #{@support_mail}, damit wir das Problem klären können.
+%p
+  Viel Erfolg,
+  %br
+  das Epic Mörderspiel XXL Team

@@ -9,6 +9,7 @@ MurdererGame::Application.routes.draw do
   get "games/:id/assign" => "games#assign", as: "new_assignment"
   get "contracts/:id/execute" => "contracts#execute", as: "contract_execution"
   get "contracts/:id/confirm" => "contracts#confirm", as: "contract_confirmation"
+  get "contracts/:id/reject" => "contracts#reject", as: "contract_rejection"
   
   get "users/:token/activate" => "users#activate", as: "activation_confirmation"
   post "users/reset_password" => "users#reset_password", as: "reset_password_execute"

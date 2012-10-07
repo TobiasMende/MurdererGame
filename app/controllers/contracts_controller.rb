@@ -10,4 +10,12 @@ class ContractsController < ApplicationController
     end
   end
   
+  def confirm
+    # TODO get contract by id and set prove date
+  end
+  
+  def reject
+    # TODO get contract by id and reset execution date
+  end
+  
 end

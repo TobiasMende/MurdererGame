@@ -1,0 +1,14 @@
+%p
+  Hallo #{@contract.murderer.name}
+%p
+  Im Spiel 
+  %strong= @contract.game.name
+  hat #{link_to @contract.victim.name, user_url(@contract.victim)} die Ermordung bestätigt.
+  %br
+  Dir wurde ein neues Mordziel zugewiesen. Um weitere Informationen zu erhalten, besuche folgende Seite:
+  %br
+  = link_to @new_game.title, game_url(@new_game)
+%p
+  Weiterhin viel Erfolg,
+  %br
+  das Epic Mörderspiel XXL Team
