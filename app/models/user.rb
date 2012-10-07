@@ -111,19 +111,42 @@ class User < ActiveRecord::Base
    def destroy
      assignments.includes(:game).where("games.game_start > ?", Date.today).destroy_all
      current_games.each do |game|
-       first = game.open_contracts.where("murderer_id = ?", self).first
-       second = game.open_contracts.where("victim_id = ?", self).first
-       v = first.victim
-       m = second.murderer
-       first.destroy
-       second.destroy
-       c = Contract.new
-       c.game = game
-       c.murderer = m
-       c.victim=v
-       c.save
+       remove_From_contractchain_in(game)
      end
      update_attribute("deleted_at", DateTime.now)
    end
 
+  # Remove this user from the contracts in a given game.
+  # Creates a new contract with his murderer and victim.
+  def remove_from_contractchain_in(game)
+    first = game.open_contracts.where("murderer_id = ?", self).first
+    second = game.open_contracts.where("victim_id = ?", self).first
+    if first != nil && second != nil
+      v = first.victim
+      m = second.murderer
+      first.destroy
+      second.destroy
+      c = Contract.new
+      c.game = game
+      c.murderer = m
+      c.victim = v
+      c.save
+    end
+  end
+
+  # Kills the user in a give game.
+  # Will remove him from the contractchain
+  # and add a new contract where the user is his own murderer.
+  # This contract then is allready proved.
+  def suicide_in(game)
+    g = Game.find(game)
+    remove_from_contractchain_in(g)
+    c = Contract.new
+    c.game = g
+    c.murderer = self
+    c.victim = self
+    c.executed_at = DateTime.now
+    c.proved_at = DateTime.now
+    c.save
+  end
 end

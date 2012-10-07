@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20121004012110) do
   create_table "games", :force => true do |t|
     t.string   "title"
     t.text     "description",        :default => ""
-    t.date     "assignment_start",   :default => '2012-10-03'
+    t.date     "assignment_start",   :default => '2012-10-07'
     t.date     "assignment_end"
     t.date     "game_start"
     t.date     "game_end"

@@ -36,11 +36,20 @@
     %ul
       - @game.proved_contracts.each do |contract|
         %li
-          = link_to contract.murderer.name, contract.murderer
-          hat am
-          = I18n.localize(contract.executed_at.to_date)
-          = link_to contract.victim.name, contract.victim
-          getötet
+          - if contract.murderer != contract.victim
+            = link_to contract.murderer.name, contract.murderer
+            hat am
+            = I18n.localize(contract.executed_at.to_date)
+            = link_to contract.victim.name, contract.victim
+            getötet
+          - else
+            = link_to contract.murderer.name, contract.murderer
+            hat sich am 
+            = I18n.localize(contract.executed_at.to_date)
+            selbst zerhackt!
+    Wenn du keine Lust oder keine Zeit mehr für dieses Spiel hast, kannst du    
+    = link_to "Selbstmord", user_suicide_path(@cu, @game), confirm: "Möchtest du dich wirklich selbst töten?"
+    begehen.      
     - else
     %strong Freie Plätze:
     = @game.free_places

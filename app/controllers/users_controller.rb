@@ -92,8 +92,15 @@ class UsersController < ApplicationController
       @user.destroy
       redirect_to :index, notice: "Dein Account wurde zerstört. Schade, dass du nicht mehr dabei bist."
      end
-    
   end
   
+  # Call suicide on user :id in game :game.
+  def suicide
+    @user = User.find(params[:id])
+    if @user == current_user && !@user.current_games.find(:all, :conditions => {:id => params[:game]}).empty?
+      @user.suicide_in(params[:game])
+      redirect_to :back, notice: "Du bist jetzt tot. Herzlichen Glückwunsch."
+    end
+  end
   
 end

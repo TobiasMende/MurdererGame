@@ -29,7 +29,7 @@ class Game < ActiveRecord::Base
   end
   
   def proved_contracts
-    contracts.where("proved_at <= ?", Date.today)
+    contracts.where("proved_at <= ?", DateTime.now)
   end
   
   def open_contracts
