@@ -18,6 +18,18 @@ class PagesController < ApplicationController
     
   end
   
+  def impressum
+    
+  end
+  
+  def about_us
+    
+  end
+  
+  def supporters
+    
+  end
+  
   def password_reset
      if logged_in?
       redirect_to :overview, notice: "Du bist eingeloggt und kannst dein Passwort nicht zurücksetzen."

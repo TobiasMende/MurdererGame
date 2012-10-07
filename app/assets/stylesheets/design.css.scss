@@ -1,10 +1,11 @@
-@font-face { font-family: Murderer; src: url("/fonts/murderer.ttf"); } 
+$link_hover_bg: #550101;
+@font-face { font-family: Murderer; src: url("/fonts/murderer-ger.ttf"); } 
 
 html, body {
   margin: 0;
   background-color: #000000;
   font-family: Verdana, Helvetica, Arial, sans-serif;
-  font-size: 12pt;
+  font-size: 11pt;
 }
 
 #main {
@@ -21,12 +22,16 @@ html, body {
   
   h1 {
     font-family: Murderer;
-    font-size: 300%;
+    font-size: 400%;
+    
+    padding: 40px 0 20px 80px;
+    background-image: url("/images/blood-h1-bg.png");
+    background-repeat: no-repeat;
   }
   
   h2 {
-    font-family: Murderer;
-    font-size: 250%;
+    font-size: 120%;
+    margin-top: 40px;
   }
 }
 
@@ -34,6 +39,87 @@ html, body {
   height: 196px;
   width: 100%;
   background-image: url("/images/header.jpg");
+  #spacer {
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+  }
+  #sign {
+    position: absolute;
+    left: 50%;
+    margin-left: -150px;
+    height: 47px;
+    width: 379px;
+    font-size: 75%;
+    line-height: 47px;
+    z-index: 10;
+    a {
+      text-decoration: none;
+    }
+    div {
+      float:left;
+      height: 100%;
+    }
+    
+    .left {
+      width: 31px;
+    }
+    
+    .main {
+      width: 203px;
+      text-align: center;
+    }
+    
+    
+    .right {
+      width: 125px;
+      
+      a {
+        display: block;
+        font-weight: bold;
+        width: 100%;
+        height: 100%;
+        padding-left: 20px;
+        background-repeat: no-repeat;
+      }
+      
+      a:hover {
+        background-position: 0 -47px;
+      }
+    }
+  }
+  
+  .loggedin {
+    .left {
+      background-image: url("/images/logout/left.png");
+    }
+    
+    .main {
+      background-image: url("/images/logout/main.png");
+    }
+    
+    .right  a{
+      background-image: url("/images/logout/button.png");
+    }
+    
+  }
+  
+  .loggedout {
+    .left {
+      background-image: url("/images/login/left.png");
+    }
+    
+    .main {
+      background-image: url("/images/login/main.png");
+    }
+    
+    .right a{
+      background-image: url("/images/login/button.png");
+    }
+  }
+  
 }
 
 #navi {
@@ -62,7 +148,7 @@ html, body {
       }
       
       a:hover {
-        background-color: #550101;
+        background-color: $link_hover_bg;
       }
     }
   }
@@ -74,10 +160,141 @@ html, body {
   background-repeat: no-repeat;
   min-height: 402px;
   background-image: url("/images/main.jpg");
+  line-height: 150%;
+  letter-spacing: 0.1em;
+  
+  a {
+    color: #ee0000;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  .column {
+    float:left;
+    width: 50%;
+  }
+  
+  thead {
+    a {
+      color: #ffffff;
+    }
+  }
+  
+  
+  
 }
 
 #footer {
   height: 34px;
-  top: -20px;
+  clear:both;
   background-image: url("/images/footer.jpg");
+  
+  ul {
+    list-style:none;
+    display:block;
+    float: right;
+    margin: 0;
+    li {
+      display: block;
+      float: left;
+      height: 34px;
+      width: 200px;
+      text-align:center;
+      a {
+        display: block;
+        height: 100%;
+        width: 100%;
+        text-decoration: none;
+        line-height: 34px;
+        text-shadow: 0 -1px #999999, 1px 0 #999999, 0 1px #999999, -1px 0 #999999;
+      }
+      
+      a:hover {
+        background-color: $link_hover_bg;
+      }
+    }
+  }
+}
+
+
+#error, #notice {
+  border: 1px solid;
+  width: 85%;
+  margin-left: 5%;
+  padding: 5px;
+  text-align: center;
+}
+
+#error {
+   color: #f0c2b3;
+  background-color: #7f0000;
+}
+
+#notice {
+  color: #abdb92;
+  background-color: #2a570c;
+}
+
+#right_menu {
+  position: absolute;
+  top: 300px;
+  right: 0px;
+  width: 128px;
+  
+  .top {
+    background-image: url("/images/right_top.png");
+    height: 34px; 
+  }
+  
+  .main {
+    ul {
+      list-style: none;
+      font-size: 90%;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        font-weight: normal;
+      li {
+        display: block;
+        width: 100%;
+        height: 48px;
+        margin: 0;
+        line-height: 24px;
+        
+        a {
+          display: block;
+          color: #ffffff;
+          text-decoration: none;
+          background-image: url("/images/right_button.png");
+          background-repeat: no-repeat;
+          height: 100%;
+          width: 100%;
+          vertical-align: middle;
+        }
+        
+        
+        a:hover {
+          background-position: 0 -48px;
+        }
+      
+      }
+      li.sr {
+        line-height: 48px;
+      }
+    }
+  }
+  
+  .bottom {
+    background-image: url("/images/right_bottom.png");
+    background-repeat: no-repeat;
+    height: 41px;
+  }
+}
+
+.float {
+  float:left;
 }

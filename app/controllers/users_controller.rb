@@ -88,18 +88,19 @@ class UsersController < ApplicationController
   
   def reset_password
     @user = User.find_by_email(params[:email])
-    respond_to do |format|
-      if @user.nil?
-        format.html { redirect_to :back, error: 'Diese E-Mail-Adresse konnte nicht gefunden werden.' }
-      else
+    if @user.nil?
+      flash[:error] = 'Diese E-Mail-Adresse konnte nicht gefunden werden.'
+      redirect_to :back
+    else
       @user.reset_password
       tmp = @user.password
       if @user.save
         UserMailer.new_password(@user, tmp).deliver
-        format.html { redirect_to :log_in, notice: 'Dein Passwort wurde zurückgesetzt. Du erhälst eine E-Mail mit dem neuen Passwort.' }
+        flash[:notice] = 'Dein Passwort wurde zurückgesetzt. Du erhälst eine E-Mail mit dem neuen Passwort.'
+        redirect_to :log_in
       else
-        format.html { redirect_to :back, error: 'Es ist ein Fehler aufgetreten. Das Passwort konnte nicht zurückgesetzt werden' }
-      end
+        flash[:error] = 'Es ist ein Fehler aufgetreten. Das Passwort konnte nicht zurückgesetzt werden'
+        redirect_to :back
       end
     end
   end
@@ -127,7 +128,8 @@ class UsersController < ApplicationController
     if @user == current_user
       session[:user_id] = nil
       @user.destroy
-      redirect_to :index, notice: "Dein Account wurde zerstört. Schade, dass du nicht mehr dabei bist."
+      flash[:notice] = "Dein Account wurde zerstört. Schade, dass du nicht mehr dabei bist."
+      redirect_to :index
      end
   end
   
@@ -136,7 +138,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user == current_user && !@user.current_games.find(:all, :conditions => {:id => params[:game]}).empty?
       @user.suicide_in(params[:game])
-      redirect_to :back, notice: "Du bist jetzt tot. Herzlichen Glückwunsch."
+      flash[:notice] = "Du bist jetzt tot. Herzlichen Glückwunsch."
+      redirect_to :back
     end
   end
   

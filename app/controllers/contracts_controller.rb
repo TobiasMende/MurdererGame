@@ -4,10 +4,11 @@ class ContractsController < ApplicationController
     contract = Contract.find(params[:id])
     contract.executed_at = DateTime.now
     if current_user == contract.murderer && contract.save
-      redirect_to :back, notice: "Der Mord wurde erfolgreich gemeldet!"
+      flash[:notice] = "Der Mord wurde erfolgreich gemeldet!"
     else
-      redirect_to :back, error: "Ein Fehler ist aufgetreten."
+      flash[:error] = "Ein Fehler ist aufgetreten."
     end
+      redirect_to :back
   end
   
   def confirm
@@ -16,9 +17,11 @@ class ContractsController < ApplicationController
       contract.proved_at = DateTime.now
       new_contract = contract.victim.remove_from_contractchain_in(contract.game)
       ContractMailer.contract_accepted(contract, new_contract).deliver
-      redirect_to game(contract.game), notice: "Der Mord wurd bestätigt. Viel Glück beim nächsten Mal."
+      flash[:notice] = "Der Mord wurd bestätigt. Viel Glück beim nächsten Mal."
+      redirect_to game(contract.game)
     else
-      redirect_to :overview, error: "Du hast keine Berechtigung, um diesen Mord zu bestätigen."
+      flash[:error] = "Du hast keine Berechtigung, um diesen Mord zu bestätigen."
+      redirect_to :overview
    end
   end
   
@@ -28,9 +31,11 @@ class ContractsController < ApplicationController
       contract.executed_at = DateTime.now
       contract.save
       ContractMailer.contract_rejected(contract).deliver
-      redirect_to game(contract.game), notice: "Der Mord wurd zurückgewiesen. Der Mörder wird per E-Mail benachrichtigt."
+      flash[:notice] = "Der Mord wurd zurückgewiesen. Der Mörder wird per E-Mail benachrichtigt."
+      redirect_to game(contract.game)
     else
-      redirect_to :overview, error: "Du hast keine Berechtigung, um diesen Mord zurückzuweisen."
+      flash[:error] = "Du hast keine Berechtigung, um diesen Mord zurückzuweisen."
+      redirect_to :overview
    end
   end
   
