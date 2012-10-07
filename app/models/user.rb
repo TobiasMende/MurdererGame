@@ -153,7 +153,9 @@ class User < ActiveRecord::Base
   def suicide_in(game)
     g = Game.find(game)
     new_contract = remove_from_contractchain_in(g)
-    ContractMailer.new_contract(new_contract).deliver
+    if new_contract
+      ContractMailer.new_contract(new_contract).deliver
+    end
     c = Contract.new
     c.game = g
     c.murderer = self
