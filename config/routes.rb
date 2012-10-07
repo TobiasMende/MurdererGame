@@ -2,6 +2,7 @@ MurdererGame::Application.routes.draw do
 
   get "index" => "pages#index", :as => "index"
   get "overview" => "pages#overview", :as => "overview"
+  get "reset_password" => "pages#password_reset", as: "password_reset"
 
 
   get "games/open", :as => "open_games"
@@ -9,6 +10,12 @@ MurdererGame::Application.routes.draw do
   get "contracts/:id/execute" => "contracts#execute", as: "contract_execution"
   get "contracts/:id/confirm" => "contracts#confirm", as: "contract_confirmation"
   get "users/:id/:game/suicide" => "users#suicide", as: "user_suicide"
+
+  get "contracts/:id/reject" => "contracts#reject", as: "contract_rejection"
+  
+  get "users/:token/activate" => "users#activate", as: "activation_confirmation"
+  post "users/reset_password" => "users#reset_password", as: "reset_password_execute"
+
   
   get "sessions/new"
   get "log_out" => "sessions#destroy", :as => "log_out"

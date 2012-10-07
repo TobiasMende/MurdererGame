@@ -1,3 +1,4 @@
+#encoding: utf-8
 class PagesController < ApplicationController
   skip_before_filter :require_login, :only => [:index]
   def index
@@ -11,5 +12,11 @@ class PagesController < ApplicationController
     @current_games = @current_user.current_games
     @future_games = @current_user.future_games
     @finished_games = @current_user.finished_games
+  end
+  
+  def password_reset
+     if logged_in?
+      redirect_to :overview, notice: "Du bist eingeloggt und kannst dein Passwort nicht zurücksetzen."
+    end
   end
 end

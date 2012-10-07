@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121004012110) do
+ActiveRecord::Schema.define(:version => 20121007102854) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "user_id"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(:version => 20121004012110) do
     t.integer  "term"
     t.datetime "last_login"
     t.datetime "deleted_at"
+    t.string   "activation_token"
   end
 
 end

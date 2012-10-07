@@ -1,0 +1,12 @@
+%p 
+  Hallo #{@assignment.user.first_name}!
+%p
+  Das Spiel 
+  %strong= @assignment.game.title
+  hat begonnen. 
+  %br
+  Schau gleich auf #{link_to "der Spieleseite", game_url(@assignment.game)} nach, wer dein erstes Mordziel ist.
+%p
+  Viel Spaß,
+  %br
+  das Epic Mörderspiel XXL Team

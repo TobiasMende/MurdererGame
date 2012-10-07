@@ -1,0 +1,14 @@
+%p
+  Hallo #{@contract.victim.first_name}!
+  %br
+  Im Spiel 
+  %strong= @conract.game.title
+  hat #{link_to @contract.murderer.name, user_url(@contract.murderer)} dich als ermordet markiert.
+%p
+  Sollte das nicht stimmen, kannst du innerhalb von 48 Stunden über diesen Link widersprechen:
+  %br
+  =link_to "Ermordung widersprechen",contract_rejection_url
+%p 
+  Viel Erfolg beim nächsten Mal,
+  %br
+  das Epic Mörderspiel XXL Team

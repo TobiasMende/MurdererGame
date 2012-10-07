@@ -1,0 +1,12 @@
+%p
+  Hallo #{@contract.murderer.name}
+%p
+  Im Spiel 
+  %strong= @contract.game.name
+  wurde dir ein neues Mordziel zugewiesen.
+  %br
+  Auf #{game_url(@contract.game)} kannst du deshalb dein neues Ziel herausfinden.
+%p
+  Viel Erfolg,
+  %br
+  das Epic Mörderspiel XXL Team

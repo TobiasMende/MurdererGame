@@ -1,0 +1,12 @@
+%p 
+  Hallo #{@assignment.user.first_name}!
+%p
+  Das Spiel 
+  %strong= @assignment.game.title
+  ist nun vorbei. 
+  %br
+  Auf #{link_to "der Spieleseite", game_url(@assignment.game)} kannst du auf unserem Highscore-Ranking nachschauen, wie gut du abgeschnitten hast.
+%p
+  Bis zum nächsten Spiel,
+  %br
+  das Epic Mörderspiel XXL Team
