@@ -18,7 +18,7 @@ class UserMailer < DefaultMailer
   def activation_confirmed(user)
     @user = user
     @support_mail = APP_CONFIG["support_mail"]
-    mail(to: user.email, subject: APP_CONFIG["subject_prefix"]+" Deine Anmeldung bei "+APP_CONFIG["domain"]) 
+    mail(to: user.email, subject: APP_CONFIG["subject_prefix"]+" Anmeldebestätigung") 
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -29,7 +29,7 @@ class UserMailer < DefaultMailer
   def new_password(user, password)
     @user = user
     @password = password
-    mail(to: user.email, subject: APP_CONFIG["subject_prefix"]+" Deine Anmeldung bei "+APP_CONFIG["domain"]) 
+    mail(to: user.email, subject: APP_CONFIG["subject_prefix"]+" Dein neues Passwort") 
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -38,8 +38,7 @@ class UserMailer < DefaultMailer
   #   en.user_mailer.information_update_request.subject
   #
   def information_update_request(user)
-    @greeting = "Hi"
-
-    mail to: "to@example.org"
+    @user = user
+    mail(to: user.email, subject: APP_CONFIG["subject_prefix"]+" Bitte prüfe deine Daten") 
   end
 end
