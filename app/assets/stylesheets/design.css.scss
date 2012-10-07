@@ -1,15 +1,51 @@
+@font-face { font-family: Murderer; src: url("/fonts/murderer.ttf"); } 
+
 html, body {
   margin: 0;
-  background-color: #666666;
+  background-color: #000000;
+  font-family: Verdana, Helvetica, Arial, sans-serif;
+  font-size: 12pt;
 }
 
 #main {
+  position:absolute;
+  width: 1000px;
   margin-top: 10px;
-  background-color: #ffffff;
+  left: 50%;
+  margin-left: -500px;
+  color: #ffffff;
+
+  a {
+    color: #ffffff;
+  }
+  
+  h1 {
+    font-family: Murderer;
+    font-size: 300%;
+  }
 }
 
 #header {
-  height: 200px;
+  height: 196px;
   width: 100%;
-  background-color: #999999;
+  background-image: url("/images/header.jpg");
+}
+
+#navi {
+  height: 56px;
+  background-image: url("/images/navigation.jpg");
+}
+
+#content {
+  width: 100%;
+  padding: 20px;
+  background-repeat: no-repeat;
+  min-height: 402px;
+  background-image: url("/images/main.jpg");
+}
+
+#footer {
+  height: 34px;
+  top: -20px;
+  background-image: url("/images/footer.jpg");
 }
