@@ -152,7 +152,7 @@ class User < ActiveRecord::Base
   # This contract then is allready proved.
   def suicide_in(game)
     g = Game.find(game)
-    new_contract = remove_from_contractchain_in(game)
+    new_contract = remove_from_contractchain_in(g)
     ContractMailer.new_contract(new_contract).deliver
     c = Contract.new
     c.game = g
