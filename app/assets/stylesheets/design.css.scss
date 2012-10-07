@@ -23,6 +23,11 @@ html, body {
     font-family: Murderer;
     font-size: 300%;
   }
+  
+  h2 {
+    font-family: Murderer;
+    font-size: 250%;
+  }
 }
 
 #header {
@@ -34,6 +39,33 @@ html, body {
 #navi {
   height: 56px;
   background-image: url("/images/navigation.jpg");
+  text-align:center;
+  font-family: Murderer;
+  font-size: 250%;
+  ul {
+    display:block;
+    float: right;
+    list-style: none;
+    margin: 0 0 0 0;
+    li {
+      display: block;
+      float: left;
+      width: 200px;
+      height: 56px;
+      line-height: 60px;
+      
+      a {
+        text-decoration: none;
+        height: 100%;
+        width: 100%;
+        display: block;
+      }
+      
+      a:hover {
+        background-color: #550101;
+      }
+    }
+  }
 }
 
 #content {

@@ -1,0 +1,12 @@
+- if current_user
+  %ul
+    %li= link_to "Home", :overview
+    %li= link_to "Spiele", :open_games
+    %li= link_to "Regeln", :rules
+- else
+  %ul
+    %li= link_to "Home", :index
+    %li= link_to "Regeln", :rules
+    %li= link_to "Login", :log_in
+    %li= link_to "Registrieren", :sign_up
+  

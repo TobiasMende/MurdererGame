@@ -14,6 +14,10 @@ class PagesController < ApplicationController
     @finished_games = @current_user.finished_games
   end
   
+  def rules
+    
+  end
+  
   def password_reset
      if logged_in?
       redirect_to :overview, notice: "Du bist eingeloggt und kannst dein Passwort nicht zurücksetzen."

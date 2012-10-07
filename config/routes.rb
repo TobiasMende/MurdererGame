@@ -2,6 +2,7 @@ MurdererGame::Application.routes.draw do
 
   get "index" => "pages#index", :as => "index"
   get "overview" => "pages#overview", :as => "overview"
+  get "rules" => "pages#rules", :as => "rules"
   get "reset_password" => "pages#password_reset", as: "password_reset"
 
 
