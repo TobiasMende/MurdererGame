@@ -1,0 +1,15 @@
+%p
+  Hallo #{@user.name},
+%p
+  willkommen beim Epic Mörderspiel XXL an der Uni Lübeck!
+  %br
+  Danke, dass du dich auf unserer Seite angemeldet hast.
+%p
+  Um die Anmeldung zu bestätigen, bitte auf folgenden Link klicken: 
+  %br
+  #{activation_confirmation_url(@user.activation_token)}
+
+%p
+  Viel Spaß - Mögen die Spiele beginnen!
+  %br
+  das Epic Mörderspiel XXL Team

@@ -12,8 +12,9 @@ class User < ActiveRecord::Base
   
   attr_accessor :password
   before_save :encrypt_password
+  before_create :generate_activation
  
-  attr_accessible :course, :email, :first_name, :image, :last_name, :password, :password_confirmation, :email_confirmation, :term, :last_login, :deleted_at
+  attr_accessible :course, :email, :first_name, :image, :last_name, :password, :password_confirmation, :email_confirmation, :term, :last_login, :deleted_at, :activation_token
   has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>", :large => "800x600" }
   validates_presence_of :first_name
   validates_presence_of :last_name
@@ -29,7 +30,7 @@ class User < ActiveRecord::Base
   
    def self.authenticate(email, password)
     user = find_by_email(email)
-    if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt) && user.deleted_at.nil?
+    if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt) && user.deleted_at.nil? && user.activation_token.nil?
       user
     else
       nil
@@ -45,6 +46,15 @@ class User < ActiveRecord::Base
       self.password_salt = BCrypt::Engine.generate_salt
       self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
     end
+  end
+  
+  def generate_activation
+    self.activation_token = SecureRandom::hex(50)
+  end
+  
+  def reset_password
+    self.password = SecureRandom::base64(8)
+    self.password_confirmation = self.password
   end
   
   def current_games

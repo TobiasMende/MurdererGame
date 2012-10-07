@@ -1,6 +1,6 @@
 #encoding: utf-8
 class UsersController < ApplicationController
-  skip_before_filter :require_login, :only => [:new, :create]
+  skip_before_filter :require_login, :only => [:new, :create, :activate, :reset_password]
   # GET /users
   # GET /users.json
   def index
@@ -57,12 +57,49 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        session[:user_id] = @user.id
-        format.html { redirect_to :overview, notice: 'Die Registrierung war erfolgreich.' }
-        format.json { render json: :overview, status: :created, location: :overview }
+        #session[:user_id] = @user.id
+        UserMailer.confirmation_needed(@user).deliver
+        format.html { redirect_to :index, notice: 'Die Registrierung war erfolgreich. Du erhälst in Kürze einen Aktivierungslink per E-Mail.' }
+        format.json { render json: :index, status: :created, location: :index }
       else
         format.html { render action: "new" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  
+  def activate
+    @user = User.find_by_activation_token(params[:token])
+    respond_to do |format|
+    if !@user.nil?
+      @user.activation_token = nil
+      if @user.save
+        session[:user_id] = @user.id
+        UserMailer.activation_confirmed(@user).deliver
+        format.html { redirect_to :overview, notice: 'Deine Aktivierung war erfolgreich.' }
+        format.json { render json: :overview, status: :created, location: :overview }
+      else
+        format.html { redirect_to :index, error: 'Etwas ist fehlgeschlagen.' }
+        
+      end
+    end
+    end
+  end
+  
+  def reset_password
+    @user = User.find_by_email(params[:email])
+    respond_to do |format|
+      if @user.nil?
+        format.html { redirect_to :back, error: 'Diese E-Mail-Adresse konnte nicht gefunden werden.' }
+      else
+      @user.reset_password
+      tmp = @user.password
+      if @user.save
+        UserMailer.new_password(@user, tmp).deliver
+        format.html { redirect_to :log_in, notice: 'Dein Passwort wurde zurückgesetzt. Du erhälst eine E-Mail mit dem neuen Passwort.' }
+      else
+        format.html { redirect_to :back, error: 'Es ist ein Fehler aufgetreten. Das Passwort konnte nicht zurückgesetzt werden' }
+      end
       end
     end
   end
