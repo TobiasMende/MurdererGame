@@ -27,6 +27,7 @@ group :production do
 end
 
 group :development do
+  gem 'therubyracer'
   gem "sqlite3"
 end
 
