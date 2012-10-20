@@ -1,8 +1,20 @@
 %table
   %tr
-    %td Spieler
-    %td Kills
+    %th Spieler
+    %th Status
+    %th Kills
+  %tr
   - @game.highscore.each do |user|
-    %tr 
-      %td user.first_name
-      %td test
+    -if user.eql?(@game.winner)
+      %tr{:class => 'winner'}
+        %td= user.name
+        %td= user.status_in_game(@game)
+        %td= user.proved_kill_contracts_for_game(@game).count
+    -else
+      %tr
+        %td= user.name
+        %td= user.status_in_game(@game)
+        %td= user.proved_kill_contracts_for_game(@game).count
+
+    
+      
