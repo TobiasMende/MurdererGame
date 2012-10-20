@@ -5,6 +5,9 @@ class Service
     
     # Service for Users:
     handle_users
+    
+    # other:
+    clean_up
   end
   
   def self.manual
@@ -58,4 +61,12 @@ class Service
     
   end
     
+  def self.clean_up
+    # Delete non activated user:
+    users = User.where("activation_token IS NOT NULL AND created_at < '"+(Date.today-2.days).to_s+"'").all
+    users.each do |user| 
+      user.image.destroy
+      user.delete
+    end
+  end
 end

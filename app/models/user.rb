@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   attr_accessor :password
   before_save :encrypt_password
   before_create :generate_activation
+  before_destroy :clear_files
  
   attr_accessible :course, :email, :first_name, :image, :last_name, :password, :password_confirmation, :email_confirmation, :term, :last_login, :deleted_at, :activation_token
   has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>", :large => "800x600" }
@@ -175,5 +176,10 @@ class User < ActiveRecord::Base
     c.executed_at = DateTime.now
     c.proved_at = DateTime.now
     c.save
+  end
+  
+  def clear_files
+    puts "Deleting Image"
+    self.image.destroy
   end
 end
