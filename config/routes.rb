@@ -19,6 +19,8 @@ MurdererGame::Application.routes.draw do
   get "contracts/:id/reject" => "contracts#reject", as: "contract_rejection"
   
   get "users/:token/activate" => "users#activate", as: "activation_confirmation"
+  get "users/:id/snitch" => "users#snitch", as: "snitch_user"
+  post "users/:id/snitch" => "users#snitch", as: "snitch_user"
   post "users/reset_password" => "users#reset_password", as: "reset_password_execute"
 
   

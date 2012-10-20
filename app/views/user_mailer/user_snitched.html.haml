@@ -1,8 +1,8 @@
 %p
   Hallo,
   %br
-  das Profil von #{link_to user.name, user_url(user)} wurde von #{link_to snitch.name, user_url(snitch)} gemeldet.
+  das Profil von #{link_to @user.name, user_url(@user)} wurde von #{link_to @snitch.name, user_url(@snitch)} gemeldet.
 %p
   %strong Der Grund:
   %br
-  =reason
+  =@reason

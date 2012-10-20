@@ -2,7 +2,7 @@ development:
   domain: "localhost:3000"
   subject_prefix: "[EPIC MÖRDERSPIEL] "
   from_mail: "emgtest@tobsolution.de"
-  support_mail: "support@epic-mörderspiel.de"
+  support_mail: "support@tobsolution.de"
   default_name: "EPIC MÖRDERSPIEL"
 
 test:

@@ -54,6 +54,6 @@ class UserMailer < DefaultMailer
     @user = user
     @reason = reason
     @snitch = snitch
-    mail(to: APP_CONFIG["support_mail"], subject: "Profil gemeldet: "+user.name+" (ID: "+user.id+")") 
+    mail(to: APP_CONFIG["support_mail"].to_iso, subject: "Profil gemeldet: "+user.name+" (ID: "+user.id.to_s+")") 
   end
 end
