@@ -1,4 +1,33 @@
-%h1 Willkommen zum Mörderspiel
-%ul
-  %li= link_to "Einloggen", "log_in"
-  %li= link_to "Registrieren", "sign_up"
+
+%h1 Ludi incipiant - "Die Spiele mögen beginnen!"
+.left.column
+  %p
+    Du bist nirgends mehr sicher, es kann jeder Zeit passieren. Ein Moment der Unachtsamkeit, und du wirst erwischt. Situationen, in denen du gar nicht mehr daran denkst, können dir zum Verhängnis werden - dein Ende bedeuten!
+  
+  %p
+    Bist du der Herausforderung gewachsen, und kannst über Leichen gehen? Scheust du dich nicht davor, alles zu tun, um der berüchtigste Mörder auf dem Campus zu werden?
+    Und das alles komplett unblutig? Dann bist du hier genau richtig!
+  
+  %p
+    Das Mörderspiel - das tödlichste Spiel nach Pacman - geht in neuen Dimensionen an der Uni Lübeck an den Start: Als EPIC MÖRDERSPIEL XXL!
+  
+  %p
+    %strong Dein Ziel:
+    Einen Auftragsmord ausführen, ohne selbst erwischt zu werden.
+    %i Jeder
+    ist Mörder und Opfer!
+    %br
+    %strong Deine Mordwaffe:
+    Alles was möglich ist - hauptsache, du 
+    %i übergibst
+    sie deinem Opfer, denn nur so kannst du es erwischen!
+    %br
+    %strong Dein Problem:
+    Du weißt
+    %i nichts
+    über dein Opfer. Du hast Bild, Name und Studiengang - der Rest liegt an dir!
+  
+  %p
+    Also nicht lang warten - #{link_to "registrieren", :sign_up}!
+.right.column{:style => "text-align: right;"}
+  = link_to image_tag("/images/sign_up_sign.png", alt: "Registrieren"), :sign_up

@@ -1,0 +1,8 @@
+- if current_user
+  .left
+  .main Hi #{link_to current_user.first_name, user_path(current_user)}
+  .right= link_to "Logout", :log_out
+- else
+  .left
+  .main= link_to "Bitte logge dich ein!", :log_in
+  .right= link_to "Login", :log_in

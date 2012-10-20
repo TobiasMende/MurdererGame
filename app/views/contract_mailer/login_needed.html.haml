@@ -1,0 +1,17 @@
+%p 
+  Hallo #{@user.first_name}!
+%p
+  Du hast dich seit zwei Wochen nicht mehr eingeloggt, nimmst aber an einem oder mehreren Spielen teil.
+  %br
+  Damit der Spielverlauf möglichst flüssig bleibt, bitten wir dich, dich aus den Spielen auszutragen, falls du nicht mehr mitspielen willst.
+  %br
+  Bist du weiterhin dabei, logge dich innerhalb von zwei Wochen wieder ein. Ansonsten wirst du vom System automatisch aus dem Spiel ausgetragen.
+%p
+  %strong Übersicht deiner Spiele:
+  %ul
+    - user.current_games.each do |game|
+      %li= link_to game.name, game_url(game)
+%p
+  Viel Spaß weiterhin,
+  %br
+  das Epic Mörderspiel XXL Team

@@ -12,14 +12,17 @@ class SessionsController < ApplicationController
   if user
     session[:user_id] = user.id
     user.update_column("last_login", DateTime.now)
-    redirect_to :overview, :notice => "Eingeloggt!"
+    flash[:notice] = "Eingeloggt!"
+    redirect_to :overview
   else
-    redirect_to sessions_new_path, error: "Password oder E-Mail sind ungültig"
+    flash[:error] = "Password oder E-Mail sind ungültig"
+    redirect_to sessions_new_path
   end
 end
 
 def destroy
   session[:user_id] = nil
-  redirect_to root_url, :notice => "Ausgeloggt!"
+  flash[:notice] = "Ausgeloggt!"
+  redirect_to root_url
 end
 end

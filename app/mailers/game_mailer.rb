@@ -25,8 +25,5 @@ class GameMailer < DefaultMailer
   #
   #   en.game_mailer.login_needed.subject
   #
-  def login_needed(assignment)
-    @assignment = assignment
-    mail(to: assignment.user.email, subject: APP_CONFIG["subject_prefix"]+assignment.game.title+" - Noch dabei?") 
-  end
+  
 end

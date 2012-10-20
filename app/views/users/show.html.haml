@@ -1,17 +1,21 @@
+= render "show_navi"
 %h1= @user.name
 .user_image= link_to(image_tag(@user.image.url(:medium)), @user.image.url(:original), class: "top_up")
 .user_info
   %table
     %tr
       %td.label Studiengang:
-      %td= @user.long_course+" ("+@user.term.to_s+". Semester)"
+      %td
+        = @user.long_course
+        %br 
+        = "("+@user.term.to_s+". Semester)"
     %tr
       %td Dabei seit:
       %td= I18n.localize(@user.created_at.to_date)
     - if !@user.last_login.nil?
       %tr
         %td Letzter Login:
-        %td= I18n.localize(@user.last_login.to_date)+" um "+@user.last_login.hour.to_s+":"+@user.last_login.min.to_s+" Uhr"
+        %td= I18n.localize(@user.last_login.to_date)+" um "+@user.last_login.strftime("%H:%M")+" Uhr"
       %br
     
 #user_activities

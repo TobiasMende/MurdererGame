@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121007102854) do
+ActiveRecord::Schema.define(:version => 20121020103414) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "user_id"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20121007102854) do
   create_table "games", :force => true do |t|
     t.string   "title"
     t.text     "description",        :default => ""
-    t.date     "assignment_start",   :default => '2012-10-07'
+    t.date     "assignment_start",   :default => '2012-09-08'
     t.date     "assignment_end"
     t.date     "game_start"
     t.date     "game_end"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20121007102854) do
     t.datetime "created_at",                                   :null => false
     t.datetime "updated_at",                                   :null => false
     t.boolean  "started",            :default => false
+    t.boolean  "finished",           :default => false
   end
 
   create_table "users", :force => true do |t|

@@ -12,9 +12,24 @@
   %body
     #main
       #header
+        - if current_user
+          #sign.loggedin= render 'layouts/sign'
+        - else
+          #sign.loggedout= render 'layouts/sign'
+        #spacer= link_to(image_tag("/images/spacer.gif", width: "100%", height: "100%"), :index)
       #navi= render 'layouts/navigation'
       #content{role: "main"}
+        - if flash[:error]
+          #error= flash[:error]
+        - if flash[:notice]
+          #notice= flash[:notice]
         = yield
-      #footer
+      - if content_for?(:right_menu)
+        #right_menu
+          .top
+          .main
+            %ul= yield :right_menu
+          .bottom
+      #footer= render 'layouts/footer'
         
     

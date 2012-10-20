@@ -9,4 +9,13 @@ class Contract < ActiveRecord::Base
   validates_presence_of :victim_id
   validates_presence_of :murderer_id  
  
+ 
+  def self.new_contract(game, murderer, victim)
+      c = Contract.new
+      c.murderer= murderer
+      c.victim= victim
+      c.game= game
+      c.save!
+      c
+  end
  end

@@ -37,6 +37,10 @@ class User < ActiveRecord::Base
     end
   end
   
+  def self.incactive_users(since=2.weeks)
+    where("last_login < ?", Date.today - since)
+  end
+  
   def name
     first_name+" "+last_name
   end
@@ -57,8 +61,10 @@ class User < ActiveRecord::Base
     self.password_confirmation = self.password
   end
   
+  
+  
   def current_games
-    games.where("game_start <= ? AND (game_end >= ? OR game_end IS NULL)", Date.today, Date.today)
+    games.where("game_start <= ? AND (game_end >= ? OR game_end IS NULL) AND finished <> ?", Date.today, Date.today, true)
   end
   
   def current_kill_contracts
@@ -153,7 +159,9 @@ class User < ActiveRecord::Base
   def suicide_in(game)
     g = Game.find(game)
     new_contract = remove_from_contractchain_in(g)
-    ContractMailer.new_contract(new_contract).deliver
+    if new_contract
+      ContractMailer.new_contract(new_contract).deliver
+    end
     c = Contract.new
     c.game = g
     c.murderer = self
