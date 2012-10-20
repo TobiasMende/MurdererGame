@@ -22,7 +22,7 @@ group :assets do
 end
 gem 'simple_form'
 gem 'jquery-rails'
-gem "paperclip", "~> 3.0"
+gem "paperclip"
 gem "colorbox-rails"
 gem "bcrypt-ruby", "~> 3.0.1"
 
