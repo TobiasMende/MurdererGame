@@ -1,6 +1,6 @@
 = render "show_navi"
 %h1= @user.name
-.user_image= link_to(image_tag(@user.image.url(:medium)), @user.image.url(:original), class: "top_up")
+.user_image= link_to(image_tag(@user.image.url(:medium)), @user.image.url(:large), :data => { :colorbox => true })
 .user_info
   %table
     %tr

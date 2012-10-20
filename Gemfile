@@ -23,6 +23,7 @@ end
 gem 'simple_form'
 gem 'jquery-rails'
 gem "paperclip", "~> 3.0"
+gem "colorbox-rails"
 gem 'bcrypt-ruby', require: "bcrypt"
 
 # To use ActiveModel has_secure_password
