@@ -36,6 +36,22 @@ class Game < ActiveRecord::Base
     contracts.where("proved_at IS NULL")
   end
   
+  def winner
+    highscore.first
+  end
+  
+  def highscore
+    score = users.all.sort_by{|user| user.proved_kill_contracts_for_game(self).count}
+    living = score.find{|user| user.proved_victim_contracts_for_game(self).count == 0}
+    
+    living.each do |user|
+      score.delete(user)
+      score.unshift(user)
+    end
+    
+    score
+  end
+  
   # def assignment_phase?
     # Date.today >= assignment_start && Date.today <= assignment_end
   # end
