@@ -25,6 +25,15 @@ class UsersController < ApplicationController
       end
     end
   end
+  
+  def snitch
+    @user = User.find(params[:id])
+    if params[:reason]
+      UserMailer.user_snitched(@user, params[:reason], current_user).deliver
+      flash[:notice] = "Vielen Dank für die Meldund. Wir kümmern uns darum!"
+      redirect_to user_path(@user)
+    end
+  end
 
   # GET /users/new
   # GET /users/new.json

@@ -20,10 +20,5 @@ class GameMailer < DefaultMailer
     mail(to: assignment.user.email, subject: APP_CONFIG["subject_prefix"]+assignment.game.title+" - Das Spiel ist beendet!") 
   end
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.game_mailer.login_needed.subject
-  #
   
 end

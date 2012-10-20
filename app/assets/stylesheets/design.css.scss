@@ -1,4 +1,4 @@
-$link_hover_bg: #550101;
+$link_hover_bg: #ee0000;
 @font-face { font-family: Murderer; src: url("/fonts/murderer-ger.ttf"); } 
 
 html, body {
@@ -15,6 +15,7 @@ html, body {
   left: 50%;
   margin-left: -500px;
   color: #ffffff;
+  text-align: justify;
 
   a {
     color: #ffffff;
@@ -148,7 +149,7 @@ html, body {
       }
       
       a:hover {
-        background-color: $link_hover_bg;
+        color: $link_hover_bg;
       }
     }
   }
@@ -214,7 +215,9 @@ html, body {
       }
       
       a:hover {
-        background-color: $link_hover_bg;
+        color: $link_hover_bg;
+        $shadow: #550101;
+        text-shadow: 0 -1px $shadow, 1px 0 $shadow, 0 1px $shadow, -1px 0 $shadow;
       }
     }
   }

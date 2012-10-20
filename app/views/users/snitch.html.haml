@@ -1,0 +1,8 @@
+%h1 Profil von #{user.first_name} melden
+
+= form_tag snitch_path(user)
+  .form_row
+    = label_tag :reason
+    = text_area_tag :reason
+  .form_submit
+    = submit_tag "Melden"

@@ -12,6 +12,12 @@ form {
     -moz-border-radius: 15px;
     border-radius: 15px;
   }
+  *[type="submit"] {
+    text-shadow: 0 -1px #999999, 1px 0 #999999, 0 1px #999999, -1px 0 #999999;
+  }
+  *[type="submit"]:hover {
+    background-color: #303030;
+  }
   
   select {
     height: 30px;
@@ -47,7 +53,6 @@ form {
     margin-top: 20px;
     height: 50px;
     width: 310px;
-    text-shadow: 0 0 0.2em #7f0000, 0 0 0.2em #7f0000, 0 0 0.2em #7f0000;
   }
 }
 
@@ -64,4 +69,14 @@ th .current {
 
 th .desc {
   background-image: url("/images/down_arrow.gif");
+}
+
+#sign_up {
+  width: 371px;
+  height: 371px;
+  background-image: url("/images/sign_up_sign.png")
+}
+
+#sign_up:hover {
+  background-position: 0px -371px;
 }

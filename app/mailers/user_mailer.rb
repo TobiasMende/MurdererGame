@@ -48,4 +48,12 @@ class UserMailer < DefaultMailer
     @user = user
     mail(to: user.email, subject: APP_CONFIG["subject_prefix"]+" Noch dabei?") 
   end
+  
+  
+  def user_snitched(user, reason, snitch)
+    @user = user
+    @reason = reason
+    @snitch = snitch
+    mail(to: APP_CONFIG["support_mail"], subject: "Profil gemeldet: "+user.name+" (ID: "+user.id+")") 
+  end
 end

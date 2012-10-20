@@ -1,4 +1,6 @@
 - content_for :right_menu do
   - if current_user == @user
     %li= link_to "Profil<br />bearbeiten".html_safe, edit_user_path(current_user)
+  - else
+    %li= link_to "Profil<br />melden".html_safe, snitch_user_path(@user)
   

@@ -38,8 +38,6 @@ class Game < ActiveRecord::Base
   
     def handle_game_end_by_date
     if !self.finished? && self.game_end? && self.game_end == Date.today - 1.days
-      self.finished = true
-      save!
       handle_game_finished
     end
   end
@@ -54,6 +52,9 @@ class Game < ActiveRecord::Base
   end
   
   def handle_game_finished
+    self.game_end = Date.today
+    self.finished = true
+    save!
     assignments.each do |assignment|
         GameMailer.game_finished(assignment).deliver
       end
