@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.6'
 gem 'execjs'
+gem 'rake'
 gem 'haml'
 gem 'sass'
 # Bundle edge Rails instead:
