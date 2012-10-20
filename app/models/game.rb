@@ -36,6 +36,41 @@ class Game < ActiveRecord::Base
     contracts.where("proved_at IS NULL")
   end
   
+  def handle_game_end_by_date
+    if !self.finished? && self.game_end? && self.game_end == Date.today - 1.days
+      self.finished = true
+      save!
+      handle_game_finished
+    end
+  end
+  
+  def handle_game_start_by_date 
+    if !self.started? && self.game_start? && self.game_start == Date.today
+      create_murder_cycle
+      assignments.each do |assignment|
+        GameMailer.game_started(assignment).deliver
+      end
+    end
+  end
+  
+  def handle_game_finished
+    assignments.each do |assignment|
+        GameMailer.game_finished(assignment).deliver
+      end
+  end
+  
+  def create_murder_cycle
+    shuffled = self.assignments.shuffle
+    if shuffled.size > 0
+      for i in 0..(shuffled.size-2) do
+        a = shuffled[i].user
+        b = shuffled[i+1].user
+        Contract.new_contract(self,a,b)
+      end
+      Contract.new_contract(self,shuffled[shuffled.size-1], shuffled[0])
+    end
+  end
+  
   # def assignment_phase?
     # Date.today >= assignment_start && Date.today <= assignment_end
   # end

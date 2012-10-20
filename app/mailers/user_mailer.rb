@@ -42,4 +42,10 @@ class UserMailer < DefaultMailer
     @user = user
     mail(to: user.email, subject: APP_CONFIG["subject_prefix"]+" Bitte prüfe deine Daten") 
   end
+  
+  
+  def login_needed(user)
+    @user = user
+    mail(to: user.email, subject: APP_CONFIG["subject_prefix"]+" Noch dabei?") 
+  end
 end
