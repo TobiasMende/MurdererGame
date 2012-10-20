@@ -143,12 +143,18 @@ class User < ActiveRecord::Base
       m = second.murderer
       first.destroy
       second.destroy
-      c = Contract.new
-      c.game = game
-      c.murderer = m
-      c.victim = v
-      c.save
-      c
+      
+      # check if game is over
+      if v.equal?(m)
+        game.handle_gamefinshed
+      else
+        c = Contract.new
+        c.game = game
+        c.murderer = m
+        c.victim = v
+        c.save
+        c
+      end
     end
   end
 
