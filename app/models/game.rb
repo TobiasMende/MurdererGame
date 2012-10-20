@@ -78,7 +78,7 @@ class Game < ActiveRecord::Base
   
   def highscore
     score = users.all.sort_by{|user| user.proved_kill_contracts_for_game(self).count}
-    living = score.find{|user| user.proved_victim_contracts_for_game(self).count == 0}
+    living = score.find_all{|user| user.proved_victim_contracts_for_game(self).count == 0}
     
     living.each do |user|
       score.delete(user)

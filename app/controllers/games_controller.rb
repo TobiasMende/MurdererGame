@@ -29,6 +29,11 @@ class GamesController < ApplicationController
     @cu = current_user
   end
   
+  def highscore
+    @game = Game.find(params[:id])
+    @cu = current_user
+  end
+  
   def assign
     @game = Game.find(params[:id])
     if !@game.joinable?(current_user)
