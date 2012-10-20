@@ -5,10 +5,13 @@ table.games {
   width:100%;
 }
 
-tr {
-  
+table.highscore {
+  width:100%;    
 }
 
-tr.winner {
-  color:red;
+td.winner {
+  width:25pt;
+  background-image:url(/images/krone.png);
+  background-repeat:no-repeat;
+  background-position:center;
 }

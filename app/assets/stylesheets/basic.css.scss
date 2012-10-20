@@ -61,6 +61,18 @@ form {
   }
 }
 
+table {
+  border:none;
+  border-collapse: collapse;
+}
+
+tr.even {
+  background-color:rgba(127, 127, 127, .3);
+}
+
+tr.odd {
+ 
+}
 
 th .current {
   padding-right: 12px;

@@ -1,20 +1,23 @@
-%table
+%table{:class => 'highscore'}
   %tr
     %th Spieler
     %th Status
     %th Kills
+    %th
   %tr
   - @game.highscore.each do |user|
     -if user.eql?(@game.winner)
-      %tr{:class => 'winner'}
-        %td= user.name
-        %td= user.status_in_game(@game)
-        %td= user.proved_kill_contracts_for_game(@game).count
-    -else
       %tr
-        %td= user.name
+        %td= link_to user.name, user
         %td= user.status_in_game(@game)
         %td= user.proved_kill_contracts_for_game(@game).count
+        %td{:class => 'winner'}
+    -else
+      %tr{:class=>"#{cycle('even','odd')}"}
+        %td= link_to user.name, user
+        %td= user.status_in_game(@game)
+        %td= user.proved_kill_contracts_for_game(@game).count
+        %td
 
     
       
