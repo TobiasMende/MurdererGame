@@ -122,11 +122,12 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt-ruby (~> 3.0.1)
+  cocaine (~> 0.4.2)
   coffee-rails (~> 3.2.1)
   colorbox-rails
   haml
   jquery-rails
-  paperclip (~> 3.3.0)
+  paperclip
   rails (= 3.2.6)
   sass
   sass-rails (~> 3.2.3)

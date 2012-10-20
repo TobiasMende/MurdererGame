@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.6'
+gem 'execjs'
 gem 'haml'
 gem 'sass'
 # Bundle edge Rails instead:
@@ -20,10 +21,20 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
 end
+
+group :production do
+  gem "mysql2", "~> 0.3.11"
+end
+
+group :development do
+  gem "sqlite3"
+end
+
 gem 'simple_form'
 gem 'jquery-rails'
 gem "paperclip"
 gem "colorbox-rails"
+gem "cocaine", "~> 0.4.2"
 gem "bcrypt-ruby", "~> 3.0.1"
 
 # To use ActiveModel has_secure_password
