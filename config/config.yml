@@ -15,6 +15,6 @@ test:
 production:
   domain: "epic-mörderspiel.de"
   subject_prefix: "[EPIC MÖRDERSPIEL] "
-  from_mail: "noreply@epic-mörderspiel.de"
+  from_mail: "noreply@xn--epic-mrderspiel-etb.de"
   support_mail: "support@epic-mörderspiel.de"
   default_name: "EPIC MÖRDERSPIEL"
