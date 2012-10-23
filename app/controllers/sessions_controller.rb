@@ -1,6 +1,6 @@
 #encoding: utf-8
 class SessionsController < ApplicationController
-  skip_before_filter :require_login, :only => :new
+  before_filter :require_login, :only => :destroy
   def new
     if logged_in?
       redirect_to :overview

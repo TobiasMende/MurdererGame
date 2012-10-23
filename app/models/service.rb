@@ -66,7 +66,7 @@ class Service
   
   def self.handle_contracts
     puts "Checking contracts ..."
-    contracts = Contract.where("executed_at < ? AND proved_at IS NULL", Date.today+2.days)
+    contracts = Contract.where("executed_at < ? AND proved_at IS NULL", Date.today-2.days)
     contracts.each do |contract|
       puts "\t confirming contract "+contract.id.to_s
       contract.confirm

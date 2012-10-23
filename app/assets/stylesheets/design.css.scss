@@ -1,5 +1,20 @@
 $link_hover_bg: #ee0000;
-@font-face { font-family: Murderer; src: url("/fonts/murderer-ger.ttf"); } 
+
+
+
+
+
+@font-face {
+    font-family: 'Murderer';
+    src: url('/fonts/youmurdererbb_ger-webfont.eot');
+    src: url('/fonts/youmurdererbb_ger-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/youmurdererbb_ger-webfont.woff') format('woff'),
+         url('/fonts/youmurdererbb_ger-webfont.ttf') format('truetype'),
+         url('/fonts/youmurdererbb_ger-webfont.svg#youmurderer_bbregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
 
 html, body {
   margin: 0;
@@ -28,8 +43,9 @@ html, body {
     line-height: 100%;
     font-family: Murderer;
     font-size: 400%;
+    letter-spacing: 0.2em;
     
-    padding: 40px 0 20px 80px;
+    padding: 20px 0 20px 80px;
     background-image: url("/images/blood-h1-bg.png");
     background-repeat: no-repeat;
   }
@@ -43,6 +59,7 @@ html, body {
 #header {
   height: 196px;
   width: 100%;
+  border: 0;
   background-image: url("/images/header.jpg");
   #spacer {
     top: 0;
