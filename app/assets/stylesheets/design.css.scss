@@ -27,8 +27,6 @@ html, body {
   position:absolute;
   width: 1000px;
   margin-top: 10px;
-  left: 50%;
-  margin-left: -500px;
   color: #ffffff;
   text-align: justify;
   background-image: url("/images/main.jpg");
@@ -61,6 +59,9 @@ html, body {
   width: 100%;
   border: 0;
   background-image: url("/images/header.jpg");
+  img {
+    border: 0;
+  }
   #spacer {
     top: 0;
     left: 0;

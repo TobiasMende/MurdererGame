@@ -93,7 +93,11 @@ th .desc {
   width: 371px;
   height: 371px;
   border: 0;
-  background-image: url("/images/sign_up_sign.png")
+  background-image: url("/images/sign_up_sign.png");
+  
+  img {
+    border: 0;
+  }
 }
 
 #sign_up:hover {
