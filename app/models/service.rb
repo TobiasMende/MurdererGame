@@ -6,6 +6,9 @@ class Service
     # Service for Users:
     handle_users
     
+    # Service for Contracts:
+    handle_contracts
+    
     # other:
     clean_up
   end
@@ -59,6 +62,15 @@ class Service
       end
     end
     
+  end
+  
+  def self.handle_contracts
+    puts "Checking contracts ..."
+    contracts = Contract.where("executed_at < ? AND proved_at IS NULL", Date.today+2.days)
+    contracts.each do |contract|
+      puts "\t confirming contract "+contract.id.to_s
+      contract.confirm
+    end
   end
     
   def self.clean_up

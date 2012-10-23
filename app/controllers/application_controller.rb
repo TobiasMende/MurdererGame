@@ -1,7 +1,7 @@
 #encoding: utf-8
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  #before_filter :require_login
+  before_filter :require_login
   helper_method :current_user
 
 private
@@ -9,7 +9,7 @@ private
 def require_login
   unless logged_in?
     flash[:error] = "Du musst dich für diese Aktion einloggen!"
-    redirect_to "sign_up"
+    redirect_to :log_in
   end
 end
 

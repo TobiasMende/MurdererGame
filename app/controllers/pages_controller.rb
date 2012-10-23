@@ -1,6 +1,6 @@
 #encoding: utf-8
 class PagesController < ApplicationController
-  skip_before_filter :require_login, :only => [:index]
+  before_filter :require_login, :only => [:overview]
   def index
     if logged_in?
       redirect_to :overview

@@ -2,12 +2,12 @@
   Hallo #{@contract.murderer.name}
 %p
   Im Spiel 
-  %strong= @contract.game.name
+  %strong= @contract.game.title
   hat #{link_to @contract.victim.name, user_url(@contract.victim)} die Ermordung bestätigt.
   %br
   Dir wurde ein neues Mordziel zugewiesen. Um weitere Informationen zu erhalten, besuche folgende Seite:
   %br
-  = link_to @new_game.title, game_url(@new_game)
+  = link_to @new_contract.game.title, game_url(@new_contract.game)
 %p
   Weiterhin viel Erfolg,
   %br

@@ -16,6 +16,8 @@ html, body {
   margin-left: -500px;
   color: #ffffff;
   text-align: justify;
+  background-image: url("/images/main.jpg");
+  background-position: 0 252px;
 
   a {
     color: #ffffff;
@@ -162,7 +164,6 @@ html, body {
   padding: 20px;
   background-repeat: no-repeat;
   min-height: 402px;
-  background-image: url("/images/main.jpg");
   line-height: 150%;
   letter-spacing: 0.1em;
   

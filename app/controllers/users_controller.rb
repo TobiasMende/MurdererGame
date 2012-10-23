@@ -81,10 +81,10 @@ class UsersController < ApplicationController
     @user = User.find_by_activation_token(params[:token])
     respond_to do |format|
     if !@user.nil?
-      @user.activation_token = nil
-      if @user.save
+      
+      if @user.activate
         session[:user_id] = @user.id
-        UserMailer.activation_confirmed(@user).deliver
+        
         format.html { redirect_to :overview, notice: 'Deine Aktivierung war erfolgreich.' }
         format.json { render json: :overview, status: :created, location: :overview }
       else

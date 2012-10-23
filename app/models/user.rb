@@ -57,6 +57,13 @@ class User < ActiveRecord::Base
     self.activation_token = SecureRandom::hex(50)
   end
   
+  def activate
+    self.activation_token = nil
+    self.save!
+    UserMailer.activation_confirmed(self).deliver
+    true
+  end
+  
   def reset_password
     self.password = SecureRandom::base64(8)
     self.password_confirmation = self.password

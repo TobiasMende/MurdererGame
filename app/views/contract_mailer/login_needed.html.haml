@@ -10,7 +10,7 @@
   %strong Übersicht deiner Spiele:
   %ul
     - user.current_games.each do |game|
-      %li= link_to game.name, game_url(game)
+      %li= link_to game.title, game_url(game)
 %p
   Viel Spaß weiterhin,
   %br

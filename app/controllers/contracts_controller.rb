@@ -16,8 +16,7 @@ class ContractsController < ApplicationController
    contract = Contract.find(params[:id])
    if contract.victim == current_user
       contract.proved_at = DateTime.now
-      new_contract = contract.victim.remove_from_contractchain_in(contract.game)
-      ContractMailer.contract_accepted(contract, new_contract).deliver
+      contract.confirm
       flash[:notice] = "Der Mord wurd bestätigt. Viel Glück beim nächsten Mal."
       redirect_to game(contract.game)
     else
@@ -29,7 +28,7 @@ class ContractsController < ApplicationController
   def reject
     contract = Contract.find(params[:id])
    if contract.victim == current_user
-      contract.executed_at = DateTime.now
+      contract.executed_at = nil
       contract.save
       ContractMailer.contract_rejected(contract).deliver
       flash[:notice] = "Der Mord wurd zurückgewiesen. Der Mörder wird per E-Mail benachrichtigt."

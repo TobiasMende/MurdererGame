@@ -37,7 +37,7 @@ gem 'jquery-rails'
 gem "paperclip"
 gem "colorbox-rails"
 gem "cocaine", "~> 0.4.2"
-gem "bcrypt-ruby", "~> 3.0.1"
+gem "bcrypt-ruby", require: "bcrypt"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
