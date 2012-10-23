@@ -22,7 +22,6 @@ class Contract < ActiveRecord::Base
   def confirm
     new_contract = self.reconnect_chain
     if !new_contract.nil?
-      puts contract.game.title
       ContractMailer.contract_accepted(self, new_contract).deliver
     end
   end
@@ -35,19 +34,20 @@ class Contract < ActiveRecord::Base
     
     
     # Delte old contract of the victim (is can't be executed)
-    
+    self.proved_at = Time.now
+      self.save
+      tmp = victims_contract
+      victims_contract.delete
     # Handle game end condition
-    if victims_contract.victim.equal?(self.murderer)
+    if tmp.victim == self.murderer
       self.game.handle_game_finished
       nil
     else
       new_contract = Contract.new
     new_contract.game = self.game
     new_contract.murderer= self.murderer
-    new_contract.victim = victims_contract.victim
-    victims_contract.delete
-      self.proved_at = Time.now
-      self.save
+    new_contract.victim = tmp.victim
+      
       new_contract.save
       new_contract
     end

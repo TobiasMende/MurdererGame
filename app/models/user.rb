@@ -153,7 +153,7 @@ class User < ActiveRecord::Base
       second.destroy
       
       # check if game is over
-      if v.equal?(m)
+      if v == m
         game.handle_gamefinshed
       else
         c = Contract.new

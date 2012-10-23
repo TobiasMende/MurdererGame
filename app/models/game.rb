@@ -55,7 +55,7 @@ class Game < ActiveRecord::Base
     self.game_end = Date.today
     self.finished = true
     save!
-    assignments.each do |assignment|
+    self.assignments.each do |assignment|
         GameMailer.game_finished(assignment).deliver
       end
   end
