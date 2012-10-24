@@ -1,5 +1,6 @@
 class Service
   def self.daily
+    puts "Starting daily service script at "+Time.now.to_s
     # Service for Games:
     handle_games
     
@@ -71,6 +72,7 @@ class Service
       puts "\t confirming contract "+contract.id.to_s
       contract.confirm
     end
+    puts "Finishing contracts ..."
   end
     
   def self.clean_up

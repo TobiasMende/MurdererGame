@@ -19,6 +19,15 @@ html, body {
   font-size: 11pt;
 }
 
+@media all and (min-width:1000px) {
+  #main {
+    position:absolute;
+    left: 50%;
+    margin-left: -500px;
+  }
+
+}
+
 #main {
   width: 1000px;
   margin-top: 10px;
