@@ -83,6 +83,10 @@ class User < ActiveRecord::Base
     victim_contracts.includes(:game).where("proved_at IS NULL").where("games.game_end >= ? OR games.game_end IS NULL", Date.today)
   end
   
+  def suicides_in(game)
+    kill_contracts.where("game_id = ? AND victim_id = ?",game,self)
+  end
+  
   def proved_kill_contracts
     kill_contracts.where("proved_at IS NOT NULL")
   end

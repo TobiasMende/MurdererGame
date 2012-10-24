@@ -79,10 +79,16 @@ class Game < ActiveRecord::Base
   def highscore
     score = users.all.sort_by{|user| user.proved_kill_contracts_for_game(self).count}
     living = score.find_all{|user| user.proved_victim_contracts_for_game(self).count == 0}
+    suicides = score.find_all{|user| user.suicides_in(self).count > 0}
     
     living.each do |user|
       score.delete(user)
       score.unshift(user)
+    end
+    
+    suicides.each do |user|
+      score.delete(user)
+      score.push(suicides)
     end
     
     score
