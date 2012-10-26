@@ -25,6 +25,10 @@ MurdererGame::Application.configure do
   #config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default_url_options = { :host => "epic-mörderspiel.de" }
+  
+  config.action_mailer.sendmail_settings = {
+    :arguments => '-i'
+  }
 
 
   # Defaults to nil and saved in location specified by config.assets.prefix
