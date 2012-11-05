@@ -12,15 +12,10 @@
     %strong Anzahl der Teilnehmer:
     = @game.assignments.count
     %br
-    %strong Teilnehmer:
-    %ul
-      - @game.users.each do |user|
-        %li 
-          = link_to user.name, user
     %strong Dein Kill Count:
     = @cu.proved_kill_contracts_for_game(@game).count
-    
-    %br      
+    %br
+    %br
     %strong Deine offenen Mordaufträge:
     %ul
       - @cu.open_kill_contracts_for_game(@game).each do |contract|
@@ -32,6 +27,14 @@
       - @cu.proved_kill_contracts_for_game(@game).each do |contract|
         %li
           = link_to contract.victim.name, contract.victim
+    %br
+    %strong Teilnehmer:
+    %ul
+      - @game.users.each do |user|
+        %li 
+          = link_to user.name, user
+    
+    %br      
     
     %strong Todesliste: 
     %ul

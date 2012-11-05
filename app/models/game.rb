@@ -65,12 +65,11 @@ class Game < ActiveRecord::Base
   def create_murder_cycle
     shuffled = self.assignments.shuffle
     if shuffled.size > 0
-      for i in 0..(shuffled.size-2) do
+      for i in 0..(shuffled.size-1) do
         a = shuffled[i].user
-        b = shuffled[i+1].user
+        b = shuffled[(i+1)%shuffled.size].user
         Contract.new_contract(self,a,b)
       end
-      Contract.new_contract(self,shuffled[shuffled.size-1], shuffled[0])
     end
   end
   

@@ -3,5 +3,5 @@
     %li= link_to "Beitreten", new_assignment_path(@game)
   - if @game.started?
     - @cu.open_kill_contracts_for_game(@game).each do |contract|
-      %li= link_to contract.victim.first_name+" umbringen", contract_execution_path(contract), confirm:"Bist du sicher, dass du "+contract.victim.name+" umgebracht hast?"
+      %li= link_to "Zielperson umbringen", contract_execution_path(contract), confirm:"Bist du sicher, dass du "+contract.victim.name+" umgebracht hast?", title: contract.victim.name+" umbringen!"
     %li.sr= link_to "Selbstmord", user_suicide_path(@cu, @game), confirm: "Möchtest du dich wirklich selbst töten?"

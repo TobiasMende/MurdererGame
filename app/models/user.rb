@@ -1,6 +1,22 @@
 #encoding: utf-8
 class User < ActiveRecord::Base
-  COURSES = {"Informatik" => "Inf", "Molecular Life Science" => "MLS", "Medizin" => "Med", "Biomedical Engineering" => "BME", "Infection Biology" => "InfBio", "Medizinische Informatik" => "MI", "Medizinische Ingeneurwissenschaften" => "MIW", "Mathematik in Medizin und Lebenswissenschaften" => "MML"}.sort
+  COURSES = {"Bachelor Informatik" => "BInf", 
+              "Bachelor Molecular Life Science" => "BMLS", 
+              "Bachelor Medizin" => "BMed", 
+              "Bachelor Biomedical Engineering" => "BBME", 
+              "Bachelor Infection Biology" => "BInfBio", 
+              "Bachelor Medizinische Informatik" => "BMI", 
+              "Bachelor Medizinische Ingeneurwissenschaften" => "BMIW", 
+              "Bachelor Mathematik in Medizin und Lebenswissenschaften" => "BMML", 
+              "Master Informatik" => "MInf", 
+              "Master Molecular Life Science" => "MMLS", 
+              "Master Medizin" => "MMed", 
+              "Master Biomedical Engineering" => "MBME", 
+              "Master Infection Biology" => "MInfBio", 
+              "Master Medizinische Informatik" => "MMI", 
+              "Master Medizinische Ingeneurwissenschaften" => "MMIW", 
+              "Master Mathematik in Medizin und Lebenswissenschaften" => "MMML",
+              "Sonstige" => "andere"}.sort
   has_many :assignments
   has_many :games, through: :assignments
   has_many :kill_contracts, :foreign_key => :murderer_id, class_name: "Contract"
@@ -134,7 +150,11 @@ class User < ActiveRecord::Base
   end
   
   def long_course
-    User::COURSES.select{|key, value| value == course}.first[0]
+    c = User::COURSES.select{|key, value| value == course}.first
+    if c.nil?
+      c = User::COURSES.select{|key, value| value == "B"+course}.first
+    end
+    c[0]
   end
   
   def update_without_confirmation(params={})
