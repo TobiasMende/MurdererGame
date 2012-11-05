@@ -45,6 +45,8 @@ class Game < ActiveRecord::Base
   def handle_game_start_by_date 
     if !self.started? && self.game_start? && self.game_start == Date.today
       create_murder_cycle
+      self.started= true
+      save!
       assignments.each do |assignment|
         GameMailer.game_started(assignment).deliver
       end
