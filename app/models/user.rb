@@ -14,7 +14,6 @@ class User < ActiveRecord::Base
   before_save :encrypt_password
   before_create :generate_activation
   before_destroy :clear_files
- 
   attr_accessible :course, :email, :first_name, :image, :last_name, :password, :password_confirmation, :email_confirmation, :term, :last_login, :deleted_at, :activation_token
   has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>", :large => "800x600" }
   validates_presence_of :first_name
@@ -40,6 +39,16 @@ class User < ActiveRecord::Base
   
   def self.incactive_users(since=2.weeks)
     where("last_login < ?", Date.today - since)
+  end
+  
+  def last_login 
+   login = read_attribute(:last_login)
+   if login.nil?
+     nil
+   else
+     login.localtime
+   end
+   
   end
   
   def name
