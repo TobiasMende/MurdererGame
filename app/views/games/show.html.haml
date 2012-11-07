@@ -1,9 +1,14 @@
 = render "show_navi"
 %h1= @game.title
+- if @game.started?
+  - @cu.victim_contracts_to_prove_in_game(@game).each do |contract|
+    %p
+      #{contract.murderer.name} hat behauptet, dass er dich umgebracht hat. Möchtest du #{link_to("zustimmen",contract_confirmation_path(contract))} oder #{link_to("ablehnen", contract_rejection_path(contract), confirm: "Bist du sicher?")}?
 - if @game.joinable?(@cu)
   %p
     = link_to "Teilnehmen", new_assignment_path(@game)
-  
+%p
+  = @game.description
 %p
   %strong Spielstart:
   = I18n.localize(@game.game_start)
@@ -14,19 +19,23 @@
     %br
     %strong Dein Kill Count:
     = @cu.proved_kill_contracts_for_game(@game).count
+    - if @cu.unproved_kill_contracts_in_game(@game).count > 0
+      = " ("+@cu.unproved_kill_contracts_in_game(@game).count.to_s+" unbestätigter Mordauftrag)"
     %br
     %br
-    %strong Deine offenen Mordaufträge:
-    %ul
-      - @cu.open_kill_contracts_for_game(@game).each do |contract|
-        %li
-          = link_to contract.victim.name, contract.victim
-          = link_to "(Kill melden)", contract_execution_path(contract), confirm:"Bist du sicher?"
-    %strong Deine abgeschlossenen Mordaufträge:
-    %ul
-      - @cu.proved_kill_contracts_for_game(@game).each do |contract|
-        %li
-          = link_to contract.victim.name, contract.victim
+    - if @cu.open_kill_contracts_for_game(@game).count > 0
+      %strong Deine offenen Mordaufträge:
+      %ul
+        - @cu.open_kill_contracts_for_game(@game).each do |contract|
+          %li
+            = link_to contract.victim.name, contract.victim
+            = link_to "(Kill melden)", contract_execution_path(contract), confirm:"Bist du sicher?"
+    - if @cu.proved_kill_contracts_for_game(@game).count > 0
+      %strong Deine abgeschlossenen Mordaufträge:
+      %ul
+        - @cu.proved_kill_contracts_for_game(@game).each do |contract|
+          %li
+            = link_to contract.victim.name, contract.victim
     %br
     %strong Teilnehmer:
     %ul
@@ -34,29 +43,26 @@
         %li 
           = link_to user.name, user
     
-    %br      
-    
-    %strong Todesliste: 
-    %ul
-      - @game.proved_contracts.each do |contract|
-        %li
-          - if contract.murderer != contract.victim
-            = link_to contract.murderer.name, contract.murderer
-            hat am
-            = I18n.localize(contract.executed_at.to_date)
-            = link_to contract.victim.name, contract.victim
-            getötet
-          - else
-            = link_to contract.murderer.name, contract.murderer
-            hat sich am 
-            = I18n.localize(contract.executed_at.to_date)
-            selbst zerhackt!
+      %br      
+    - if @game.proved_contracts.count > 0
+      %strong Todesliste: 
+      %ul
+        - @game.proved_contracts.order("executed_at desc").each do |contract|
+          %li
+            - if contract.murderer != contract.victim
+              = link_to contract.murderer.name, contract.murderer
+              hat am
+              = I18n.localize(contract.executed_at.to_date)
+              = link_to contract.victim.name, contract.victim
+              getötet
+            - else
+              = link_to contract.murderer.name, contract.murderer
+              hat sich am 
+              = I18n.localize(contract.executed_at.to_date)
+              selbst zerhackt!
     Wenn du keine Lust oder keine Zeit mehr für dieses Spiel hast, kannst du    
     = link_to "Selbstmord", user_suicide_path(@cu, @game), confirm: "Möchtest du dich wirklich selbst töten?"
     begehen.      
     - else
     %strong Freie Plätze:
     = @game.free_places
-      
-%p
-  = @game.description

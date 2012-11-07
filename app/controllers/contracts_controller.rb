@@ -18,7 +18,7 @@ class ContractsController < ApplicationController
       contract.proved_at = DateTime.now
       contract.confirm
       flash[:notice] = "Der Mord wurd bestätigt. Viel Glück beim nächsten Mal."
-      redirect_to game(contract.game)
+      redirect_to game_path(contract.game)
     else
       flash[:error] = "Du hast keine Berechtigung, um diesen Mord zu bestätigen."
       redirect_to :overview
@@ -32,7 +32,7 @@ class ContractsController < ApplicationController
       contract.save
       ContractMailer.contract_rejected(contract).deliver
       flash[:notice] = "Der Mord wurd zurückgewiesen. Der Mörder wird per E-Mail benachrichtigt."
-      redirect_to game(contract.game)
+      redirect_to game_path(contract.game)
     else
       flash[:error] = "Du hast keine Berechtigung, um diesen Mord zurückzuweisen."
       redirect_to :overview

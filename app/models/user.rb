@@ -108,6 +108,14 @@ class User < ActiveRecord::Base
     victim_contracts.includes(:game).where("proved_at IS NULL").where("games.game_end >= ? OR games.game_end IS NULL", Date.today)
   end
   
+  def victim_contracts_to_prove
+    current_victim_contracts.where("executed_at IS NOT NULL")
+  end
+  
+  def unproved_kill_contracts
+    kill_contracts.includes(:game).where("executed_at IS NOT NULL AND proved_at IS NULL").where("games.game_end >= ? OR games.game_end IS NULL", Date.today)
+  end
+  
   def suicides_in(game)
     kill_contracts.where("game_id = ? AND victim_id = ?",game,self)
   end
@@ -129,8 +137,16 @@ class User < ActiveRecord::Base
     proved_kill_contracts.where("game_id = ?", game)
   end
   
+  def unproved_kill_contracts_in_game(game)
+    unproved_kill_contracts.where("game_id = ?",game)
+  end
+  
   def proved_victim_contracts_for_game(game)
     proved_victim_contracts.where("game_id = ?",game)
+  end
+  
+  def victim_contracts_to_prove_in_game(game)
+    victim_contracts_to_prove.where("game_id = ?",game)
   end
   
   def finished_games
