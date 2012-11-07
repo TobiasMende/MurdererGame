@@ -7,7 +7,7 @@
 - if @game.joinable?(@cu)
   %p
     = link_to "Teilnehmen", new_assignment_path(@game)
-%p
+%p{style: "width: 820px"}
   = @game.description
 %p
   %strong Spielstart:
