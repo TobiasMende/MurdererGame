@@ -25,7 +25,7 @@ class Game < ActiveRecord::Base
   
   
   def joinable?(user)
-    (free_places != 0 && !started? && users.where("user_id = ?", user).empty?)
+    (free_places != 0 && !started? && !finished && users.where("user_id = ?", user).empty?)
   end
   
   def proved_contracts

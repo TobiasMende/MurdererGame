@@ -13,56 +13,10 @@
   %strong Spielstart:
   = I18n.localize(@game.game_start)
   %br
-  - if @game.started?
-    %strong Anzahl der Teilnehmer:
-    = @game.assignments.count
-    %br
-    %strong Dein Kill Count:
-    = @cu.proved_kill_contracts_for_game(@game).count
-    - if @cu.unproved_kill_contracts_in_game(@game).count > 0
-      = " ("+@cu.unproved_kill_contracts_in_game(@game).count.to_s+" unbestätigter Mordauftrag)"
-    %br
-    %br
-    - if @cu.open_kill_contracts_for_game(@game).count > 0
-      %strong Deine offenen Mordaufträge:
-      %ul
-        - @cu.open_kill_contracts_for_game(@game).each do |contract|
-          %li
-            = link_to contract.victim.name, contract.victim
-            = link_to "(Kill melden)", contract_execution_path(contract), confirm:"Bist du sicher?"
-    - if @cu.proved_kill_contracts_for_game(@game).count > 0
-      %strong Deine abgeschlossenen Mordaufträge:
-      %ul
-        - @cu.proved_kill_contracts_for_game(@game).each do |contract|
-          %li
-            = link_to contract.victim.name, contract.victim
-    %br
-    %strong Teilnehmer:
-    %ul
-      - @game.users.each do |user|
-        %li 
-          = link_to user.name, user
-    
-      %br      
-    - if @game.proved_contracts.count > 0
-      %strong Todesliste: 
-      %ul
-        - @game.proved_contracts.order("executed_at desc").each do |contract|
-          %li
-            - if contract.murderer != contract.victim
-              = link_to contract.murderer.name, contract.murderer
-              hat am
-              = I18n.localize(contract.executed_at.to_date)
-              = link_to contract.victim.name, contract.victim
-              getötet
-            - else
-              = link_to contract.murderer.name, contract.murderer
-              hat sich am 
-              = I18n.localize(contract.executed_at.to_date)
-              selbst zerhackt!
-    Wenn du keine Lust oder keine Zeit mehr für dieses Spiel hast, kannst du    
-    = link_to "Selbstmord", user_suicide_path(@cu, @game), confirm: "Möchtest du dich wirklich selbst töten?"
-    begehen.      
-    - else
+  - if @game.started? && !@game.finished?
+    =  render :partial => "show_ongoing", :locals => {game: @game, cu: @cu}
+  - elsif @game.finished?
+    =  render :partial => "show_finished", :locals => {game: @game, cu: @cu}
+  - else
     %strong Freie Plätze:
     = @game.free_places
