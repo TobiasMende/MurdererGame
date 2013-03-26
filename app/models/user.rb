@@ -203,7 +203,7 @@ class User < ActiveRecord::Base
       
       # check if game is over
       if v == m
-        game.handle_gamefinshed
+        game.handle_game_finished
       else
         c = Contract.new
         c.game = game
