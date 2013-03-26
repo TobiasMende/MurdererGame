@@ -39,11 +39,12 @@ class Service
   end
   
   def self.handle_users
+    puts "Handling Users ..."
     inactive_user = User.incactive_users(2.weeks)
     inactive_user.each do |user|
       send_inactive_mail = false
       user.current_games.each do |game|
-        if proved_victim_contracts_for_game(game).count == 0
+        if user.proved_victim_contracts_for_game(game).count == 0
           send_inactive_mail = true
           break
         end
@@ -57,7 +58,7 @@ class Service
      inactive_user = User.incactive_users(4.weeks)
     inactive_user.each do |user|
       user.current_games.each do |game|
-        if proved_victim_contracts_for_game(game).count == 0
+        if user.proved_victim_contracts_for_game(game).count == 0
           user.suicide_in(game)
         end
       end
