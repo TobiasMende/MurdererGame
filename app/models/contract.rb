@@ -36,6 +36,8 @@ class Contract < ActiveRecord::Base
   # end
   end
 
+
+
   def reconnect_chain(new_murderer)
     # Contract where the current victim is the murderer
     victims_contract = self.victim.current_kill_contracts_for_game(self.game)
