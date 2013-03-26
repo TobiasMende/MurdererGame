@@ -83,7 +83,7 @@ class Game < ActiveRecord::Base
   end
   
   def highscore
-    score = users.all.sort_by{|user| user.proved_kill_contracts_for_game(self).count}
+    score = users.all.sort_by{|user| user.proved_kill_contracts_for_game(self).count}.reverse
     living = score.find_all{|user| user.proved_victim_contracts_for_game(self).count == 0}
     suicides = score.find_all{|user| user.suicides_in(self).count > 0}
     

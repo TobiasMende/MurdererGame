@@ -22,18 +22,24 @@ class Contract < ActiveRecord::Base
       # Find next murderer which is alive:
       m = self.murderer
       puts "First murderer = "+m.name+"("+m.id.to_s+")"
-      while !m.is_alive_in_game(game) && !(m == self.victim)
+      while !m.is_alive_in_game(game) && (m != self.victim)
         m = m.proved_victim_contracts_for_game(self.game).last.murderer
         puts "Next murderer = "+m.name+"("+m.id.to_s+")"
       end
     # reconnect chain m --> victim
     puts "Goto reconnect_chain"
     new_contract = self.reconnect_chain(m)
+    if !new_contract.nil?
     puts "New contract = ("+new_contract.murderer_id.to_s+", "+new_contract.victim_id.to_s+") ID: "+new_contract.id.to_s
     ContractMailer.new_contract(new_contract).deliver
     end
+    end
     self.proved_at = Time.now
     self.save
+    if self.game.open_contracts.empty?
+      self.game.handle_game_finished
+    end
+    
   # new_contract = self.reconnect_chain
   # if !new_contract.nil?
   # ContractMailer.contract_accepted(self, new_contract).deliver
@@ -57,7 +63,6 @@ class Contract < ActiveRecord::Base
     end
     # Handle game end condition
     if tmp.first.victim == new_murderer
-      self.game.handle_game_finished
       nil
     else
       puts "Creating new contract"
