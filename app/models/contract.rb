@@ -21,11 +21,15 @@ class Contract < ActiveRecord::Base
     if self.victim.unproved_kill_contracts_in_game(self.game).empty? && !self.victim.open_kill_contracts_for_game(self.game).empty?
       # Find next murderer which is alive:
       m = self.murderer
+      puts "First murderer = "+m.name+"("+m.id+")"
       while !m.is_alive_in_game(game) && !(m == self.victim)
         m = m.proved_victim_contracts_for_game(self.game).last.murderer
+        puts "Next murderer = "+m.name+"("+m.id+")"
       end
     # reconnect chain m --> victim
+    puts "Goto reconnect_chain"
     new_contract = self.reconnect_chain(m)
+    puts "New contract = ("+new_contract.murderer_id+", "+new_contract.victim_id+") ID: "+new_contract.id
     ContractMailer.new_contract(new_contract).deliver
     end
     self.proved_at = Time.now
@@ -39,6 +43,7 @@ class Contract < ActiveRecord::Base
 
 
   def reconnect_chain(new_murderer)
+    puts "Reconnecting Chain..."
     # Contract where the current victim is the murderer
     victims_contract = self.victim.open_kill_contracts_for_game(self.game)
 
@@ -46,6 +51,7 @@ class Contract < ActiveRecord::Base
 
     # Delte old contract of the victim (is can't be executed)
     tmp = victims_contract
+    puts "Deleting victim contracts"
     victims_contract.each do |c|
       c.destroy
     end
@@ -54,12 +60,14 @@ class Contract < ActiveRecord::Base
       self.game.handle_game_finished
       nil
     else
+      puts "Creating new contract"
       new_contract = Contract.new
     new_contract.game = self.game
     new_contract.murderer= new_murderer
     new_contract.victim = tmp.first.victim
-
+    puts "Saving contract ..."
     new_contract.save
+    puts "Contract saved."
     new_contract
     end
   end
