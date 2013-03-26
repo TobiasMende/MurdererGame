@@ -47,7 +47,6 @@ class Game < ActiveRecord::Base
     self.started = true
     self.game_start = Date.today
     save!
-    create_murder_cycle
       self.assignments.each do |assignment|
         GameMailer.game_started(assignment).deliver
       end
