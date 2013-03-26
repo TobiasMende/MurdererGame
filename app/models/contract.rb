@@ -57,7 +57,7 @@ class Contract < ActiveRecord::Base
       new_contract = Contract.new
     new_contract.game = self.game
     new_contract.murderer= new_murderer
-    new_contract.victim = tmp.victim
+    new_contract.victim = tmp.first.victim
 
     new_contract.save
     new_contract
