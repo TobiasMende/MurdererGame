@@ -1,9 +1,9 @@
 = render "show_navi"
 %h1= @game.title
-- if @game.started?
+- if @game.started? && !@game.finished
   - @cu.victim_contracts_to_prove_in_game(@game).each do |contract|
     %p
-      #{contract.murderer.name} hat behauptet, dass er dich umgebracht hat. Möchtest du #{link_to("zustimmen",contract_confirmation_path(contract))} oder #{link_to("ablehnen", contract_rejection_path(contract), confirm: "Bist du sicher?")}?
+      #{contract.murderer.name} hat behauptet, dass er dich umgebracht hat. Möchtest du #{link_to("zustimmen",contract_confirmation_path(contract),confirm: "Bitte melde vorher alle Morde, die du begangen hast, bevor du dies bestätigst.")} oder #{link_to("ablehnen", contract_rejection_path(contract), confirm: "Bist du sicher?")}?
 - if @game.joinable?(@cu)
   %p
     = link_to "Teilnehmen", new_assignment_path(@game)
