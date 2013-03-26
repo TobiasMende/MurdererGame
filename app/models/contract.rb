@@ -21,15 +21,15 @@ class Contract < ActiveRecord::Base
     if self.victim.unproved_kill_contracts_in_game(self.game).empty? && !self.victim.open_kill_contracts_for_game(self.game).empty?
       # Find next murderer which is alive:
       m = self.murderer
-      puts "First murderer = "+m.name+"("+m.id+")"
+      puts "First murderer = "+m.name+"("+m.id.to_str+")"
       while !m.is_alive_in_game(game) && !(m == self.victim)
         m = m.proved_victim_contracts_for_game(self.game).last.murderer
-        puts "Next murderer = "+m.name+"("+m.id+")"
+        puts "Next murderer = "+m.name+"("+m.id.to_str+")"
       end
     # reconnect chain m --> victim
     puts "Goto reconnect_chain"
     new_contract = self.reconnect_chain(m)
-    puts "New contract = ("+new_contract.murderer_id+", "+new_contract.victim_id+") ID: "+new_contract.id
+    puts "New contract = ("+new_contract.murderer_id.to_str+", "+new_contract.victim_id.to_str+") ID: "+new_contract.id.to_str
     ContractMailer.new_contract(new_contract).deliver
     end
     self.proved_at = Time.now
