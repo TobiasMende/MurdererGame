@@ -158,11 +158,15 @@ class User < ActiveRecord::Base
   end
   
   def status_in_game(game)
-    if proved_victim_contracts_for_game(game).empty?
+    if is_alive_in_game(game)
       "lebendig"
     else
       "getötet"
     end
+  end
+  
+  def is_alive_in_game(game)
+    proved_victim_contracts_for_game(game).empty?
   end
   
   def long_course
