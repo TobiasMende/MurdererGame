@@ -46,7 +46,9 @@ class Contract < ActiveRecord::Base
 
     # Delte old contract of the victim (is can't be executed)
     tmp = victims_contract
-    victims_contract.delete
+    victims_contract.each do |c|
+      c.destroy
+    end
     # Handle game end condition
     if tmp.victim == new_murderer
       self.game.handle_game_finished
