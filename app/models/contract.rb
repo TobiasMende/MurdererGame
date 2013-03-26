@@ -18,7 +18,7 @@ class Contract < ActiveRecord::Base
   end
 
   def confirm
-    if victim.unproved_kill_contracts_in_game(self.game).empty?
+    if self.victim.unproved_kill_contracts_in_game(self.game).empty? && !self.victim.open_kill_contracts_for_game(self.game).empty?
       # Find next murderer which is alive:
       m = self.murderer
       while !m.is_alive_in_game(game) && !(m == self.victim)
