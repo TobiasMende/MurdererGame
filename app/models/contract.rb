@@ -56,7 +56,7 @@ class Contract < ActiveRecord::Base
       c.destroy
     end
     # Handle game end condition
-    if tmp.victim == new_murderer
+    if tmp.first.victim == new_murderer
       self.game.handle_game_finished
       nil
     else
