@@ -26,27 +26,38 @@ class Contract < ActiveRecord::Base
         m = m.proved_victim_contracts_for_game(self.game).last.murderer
         puts "Next murderer = "+m.name+"("+m.id.to_s+")"
       end
-    # reconnect chain m --> victim
-    puts "Goto reconnect_chain"
-    new_contract = self.reconnect_chain(m)
-    if !new_contract.nil?
-    puts "New contract = ("+new_contract.murderer_id.to_s+", "+new_contract.victim_id.to_s+") ID: "+new_contract.id.to_s
-    ContractMailer.new_contract(new_contract).deliver
-    end
+      # reconnect chain m --> victim
+      puts "Goto reconnect_chain"
+      new_contract = self.reconnect_chain(m)
+      if !new_contract.nil?
+        puts "New contract = ("+new_contract.murderer_id.to_s+", "+new_contract.victim_id.to_s+") ID: "+new_contract.id.to_s
+        ContractMailer.new_contract(new_contract).deliver
+      end
     end
     self.proved_at = Time.now
     self.save
     if self.game.open_contracts.empty?
-      self.game.handle_game_finished
+    self.game.handle_game_finished
     end
-    
-  # new_contract = self.reconnect_chain
-  # if !new_contract.nil?
-  # ContractMailer.contract_accepted(self, new_contract).deliver
-  # end
+
   end
 
+  def execute
+    self.executed_at = DateTime.now
+    if self.save
+      ContractMailer.contract_executed(self).deliver
+    true
+    else
+    false
+    end
 
+  end
+
+  def reject
+    self.executed_at = nil
+    self.save
+    ContractMailer.contract_rejected(contract).deliver
+  end
 
   def reconnect_chain(new_murderer)
     puts "Reconnecting Chain..."
@@ -67,12 +78,12 @@ class Contract < ActiveRecord::Base
     else
       puts "Creating new contract"
       new_contract = Contract.new
-    new_contract.game = self.game
-    new_contract.murderer= new_murderer
-    new_contract.victim = tmp.first.victim
-    puts "Saving contract ..."
-    new_contract.save
-    puts "Contract saved."
+      new_contract.game = self.game
+      new_contract.murderer= new_murderer
+      new_contract.victim = tmp.first.victim
+      puts "Saving contract ..."
+      new_contract.save
+      puts "Contract saved."
     new_contract
     end
   end

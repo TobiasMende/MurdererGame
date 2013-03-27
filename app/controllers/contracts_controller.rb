@@ -3,8 +3,7 @@ class ContractsController < ApplicationController
   
   def execute
     contract = Contract.find(params[:id])
-    contract.executed_at = DateTime.now
-    if current_user == contract.murderer && contract.save
+    if current_user == contract.murderer && contract.execute
       flash[:notice] = "Der Mord wurde erfolgreich gemeldet!"
     else
       flash[:error] = "Ein Fehler ist aufgetreten."
@@ -15,8 +14,7 @@ class ContractsController < ApplicationController
   def confirm
    contract = Contract.find(params[:id])
    if contract.victim == current_user
-      contract.proved_at = DateTime.now
-      contract.confirm
+     contract.confirm
       flash[:notice] = "Der Mord wurd bestätigt. Viel Glück beim nächsten Mal."
       redirect_to game_path(contract.game)
     else
@@ -28,9 +26,7 @@ class ContractsController < ApplicationController
   def reject
     contract = Contract.find(params[:id])
    if contract.victim == current_user
-      contract.executed_at = nil
-      contract.save
-      ContractMailer.contract_rejected(contract).deliver
+     contract.reject
       flash[:notice] = "Der Mord wurd zurückgewiesen. Der Mörder wird per E-Mail benachrichtigt."
       redirect_to game_path(contract.game)
     else
