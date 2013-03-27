@@ -43,18 +43,24 @@ class Game < ActiveRecord::Base
   end
   
   def start_game
-    create_murder_cycle
-    self.started = true
-    self.game_start = Date.today
-    save!
-      self.assignments.each do |assignment|
-        GameMailer.game_started(assignment).deliver
-      end
+    if can_start?
+      create_murder_cycle
+      self.started = true
+      self.game_start = Date.today
+      save!
+        self.assignments.each do |assignment|
+          GameMailer.game_started(assignment).deliver
+        end
+     end
+  end
+  
+  def can_start?
+    !self.started? && self.assignments.count >= 2
   end
   
   def handle_game_start_by_date 
-    if !self.started? && self.game_start? && self.game_start == Date.today
-      self.start_game
+    if can_start? && self.game_start? && self.game_start <= Date.today
+      start_game
     end
   end
   
