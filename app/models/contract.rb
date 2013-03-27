@@ -37,7 +37,7 @@ class Contract < ActiveRecord::Base
     self.proved_at = Time.now
     self.save
     if self.game.open_contracts.empty?
-    self.game.handle_game_finished
+      self.game.handle_game_finished
     end
 
   end
@@ -46,21 +46,22 @@ class Contract < ActiveRecord::Base
     self.executed_at = DateTime.now
     if self.save
       ContractMailer.contract_executed(self).deliver
-    true
+      true
     else
-    false
+      false
     end
 
   end
 
   def reject
     self.executed_at = nil
-    self.save
-    ContractMailer.contract_rejected(contract).deliver
+    if self.save
+      ContractMailer.contract_rejected(contract).deliver
+    end
   end
 
   def reconnect_chain(new_murderer)
-    puts "Reconnecting Chain..."
+    puts "Reconnecting Chain ..."
     # Contract where the current victim is the murderer
     victims_contract = self.victim.open_kill_contracts_for_game(self.game)
 
@@ -68,7 +69,7 @@ class Contract < ActiveRecord::Base
 
     # Delte old contract of the victim (is can't be executed)
     tmp = victims_contract
-    puts "Deleting victim contracts"
+    puts "Deleting victim contracts ..."
     victims_contract.each do |c|
       c.destroy
     end
