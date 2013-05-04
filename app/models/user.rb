@@ -26,24 +26,33 @@ class User < ActiveRecord::Base
 
   attr_accessor :password
   before_save :encrypt_password
+  before_save do
+    self.email.downcase!
+    self.openid_url.downcase!
+  end
   before_create :generate_activation
   before_destroy :clear_files
-  attr_accessible :course, :email, :first_name, :image, :last_name, :password, :password_confirmation, :email_confirmation, :term, :last_login, :deleted_at, :activation_token
+  attr_accessible :course, :email, :first_name, :image, :last_name, :password, :password_confirmation, :email_confirmation, :term, :last_login, :deleted_at, :activation_token, :openid_url
   has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>", :large => "800x600" }
   validates_presence_of :first_name
   validates_presence_of :last_name
   validates_presence_of :course
-  validates_attachment :image, attachment_presence: true, content_type: {content_type: "image/jpg", content_type: "image/jpeg"}, size: {in: 0..1000.kilobytes}
-  validates_presence_of :email
-  validates_confirmation_of :email
-  validates_presence_of :password, :on => :create
-  validates_confirmation_of :password
+  validates_attachment :image, attachment_presence: true, content_type: {content_type: "image/jpg", content_type: "image/jpeg"}, size: {in: 0..10000.kilobytes}
+  validates_presence_of :email, :unless => :openid_url?
+  validates_confirmation_of :email, :unless => :openid_url?
+  validates_presence_of :password, :on => :create, :unless => :openid_url?
+  validates_confirmation_of :password, :unless => :openid_url?
+  validates_presence_of :openid_url, :on => :create, :unless => :email?
   validates_uniqueness_of :email
+  validates_uniqueness_of :openid_url, allow_blank: true, allow_nil: true, :case_sensitive => false
   validates :term, presence: true, numericality: {greater_than_or_equal: 1, only_integer: true}
 
   def self.authenticate(email, password)
-    user = find_by_email(email)
-    if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt) && user.deleted_at.nil? && user.activation_token.nil?
+    user = find_by_email(email).first
+    if user.nil? || user.password_hash.nil?
+      return nil
+    end
+    if !user.nil? && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt) && user.deleted_at.nil? && user.activation_token.nil?
     user
     else
       nil
@@ -53,6 +62,13 @@ class User < ActiveRecord::Base
   def self.incactive_users(since=2.weeks)
     where("last_login < ?", Date.today - since)
   end
+
+def self.find_by_openid_url(openid_url)
+  User.find(:all, :conditions => ["openid_url = lower(?)", openid_url]) 
+end
+def self.find_by_email(email)
+  User.find(:all, :conditions => ["email = lower(?)", email]) 
+end
 
   def last_login
     login = read_attribute(:last_login)

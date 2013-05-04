@@ -1,4 +1,10 @@
-#encoding: utf-8
+# coding: utf-8
+require 'pathname'
+require "openid"
+require 'openid/extensions/sreg'
+require 'openid/extensions/pape'
+require 'openid/store/filesystem'
+
 class UsersController < ApplicationController
   skip_before_filter :require_login, :only => [:new, :create, :activate, :reset_password]
   # GET /users
@@ -63,7 +69,15 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(params[:user])
-
+    puts @user
+    if @user.openid_url.nil? || @user.openid_url.blank?
+      handle_traditional_registration
+    else
+      handle_openid_registration
+    end
+  end
+  
+  def handle_traditional_registration
     respond_to do |format|
       if @user.save
         #session[:user_id] = @user.id
@@ -76,6 +90,33 @@ class UsersController < ApplicationController
       end
     end
   end
+  
+  
+  def handle_openid_registration
+    begin
+    request = openid_consumer.begin(@user.openid_url)
+    rescue OpenID::OpenIDError => e
+      flash[:error] = "Der OpenID-Server #{@user.openid_url} war nicht erreichbar."
+      redirect_to sign_up_path
+     else
+     if @user.save
+      # Daten anfordern - siehe Spec:
+      # http://openid.net/specs/openid-simple-registration-extension-1_0.html
+      request.add_extension_arg('sreg','required','email,fullname')
+      # Request senden - erster Parameter = Trusted Site,
+      # zweiter Parameter = anschließende Weiterleitung
+      redirect_to request.redirect_url(root_url, openid_complete_registration_url)
+    else 
+      respond_to do |format|
+     format.html { render action: "new" }
+     format.json { render json: @user.errors, status: :unprocessable_entity }
+     end
+    end
+      
+    end
+  end
+  
+  
   
   def activate
     @user = User.find_by_activation_token(params[:token])
@@ -152,4 +193,8 @@ class UsersController < ApplicationController
     end
   end
   
+  protected
+    def openid_consumer
+    @openid_consumer ||= OpenID::Consumer.new(session, OpenID::Store::Filesystem.new(Rails.root.to_s + "/tmp/openid"))
+  end
 end

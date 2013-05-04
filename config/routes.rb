@@ -9,6 +9,13 @@ MurdererGame::Application.routes.draw do
   get "reset_password" => "pages#password_reset", as: "password_reset"
 
 
+  get "openid/begin"
+  post "openid/begin"
+  get "openid/complete"
+  get "openid/login"
+  get "openid/complete_registration"
+  get "openid/begin_registration"
+
   get "games/open", :as => "open_games"
   get "games/:id/assign" => "games#assign", as: "new_assignment"
   get "games/:id/highscore" => "games#highscore", as: "highscore"

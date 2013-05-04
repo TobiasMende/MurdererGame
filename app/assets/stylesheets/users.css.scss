@@ -38,3 +38,27 @@
     
   }
 }
+
+.two_column {
+  margin-left: 100px;
+  width: 100%;
+  clear:both;
+  margin-bottom: 10px;
+  .alternate {
+    display:block;
+    margin-top: 0px;
+    width: 40%;
+    height:100%;
+    margin-bottom: 10px;
+    float:left;
+    label {
+      text-align: center!important;
+      width: 316px!important;
+      padding-right: 0px!important;
+    }
+    
+    .form_submit {
+      margin-left: 0px!important;
+    }
+  }
+}

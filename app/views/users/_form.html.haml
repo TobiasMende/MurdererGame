@@ -19,17 +19,27 @@
   .form_row
     = f.label :image
     .field= f.file_field :image
-  .form_row
-    = f.label :email
-    .field= f.email_field :email
-  .form_row
-    = f.label :email_confirmation
-    .field= f.email_field :email_confirmation, required: false
-  .form_row
-    = f.label :password
-    .field= f.password_field :password, required: false
-  .form_row
-    = f.label :password_confirmation
-    .field= f.password_field :password_confirmation
+  .two_column
+    #one.alternate
+      %h2
+        Traditionelle Registrierung
+      .form_row
+        = f.label :email
+        .field= f.email_field :email
+      .form_row
+        = f.label :email_confirmation
+        .field= f.email_field :email_confirmation, required: false
+      .form_row
+        = f.label :password
+        .field= f.password_field :password, required: false
+      .form_row
+        = f.label :password_confirmation
+        .field= f.password_field :password_confirmation
+    #two.alternate
+      %h2
+        oder OpenID Registrierung
+      .form_row
+        =f.label(:openid_url, "OpenID URL")
+        .field= f.text_field :openid_url
   .form_submit
     = f.submit submit_text

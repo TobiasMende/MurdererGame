@@ -1,10 +1,14 @@
 = form_tag sessions_path do
-  .form_row
-    = label_tag :email
-    = text_field_tag :email, params[:email]
-  .form_row
-    = label_tag :password
-    = password_field_tag :password
-  .form_submit
-    = submit_tag "Einloggen"
-    = link_to "Passwort vergessen", password_reset_path
+  .two_column
+    #one.alternate
+      .form_row
+        = label_tag :email
+        = text_field_tag :email, params[:email]
+      .form_row
+        = label_tag :password
+        = password_field_tag :password
+      .form_submit
+        = submit_tag "Einloggen"
+        = link_to "Passwort vergessen", password_reset_path
+    #two.alternate
+      = link_to "Mit OpenID einloggen", openid_login_path
