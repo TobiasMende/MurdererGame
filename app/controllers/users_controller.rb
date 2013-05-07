@@ -69,7 +69,6 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(params[:user])
-    puts @user
     if @user.openid_url.nil? || @user.openid_url.blank?
       handle_traditional_registration
     else
@@ -159,8 +158,16 @@ class UsersController < ApplicationController
   # PUT /users/1.json
   def update
     @user = User.find(params[:id])
+    if @user.openid_url.nil? || @user.openid_url.blank?
+      handle_traditional_update
+    else
+      handle_openid_update
+    end
+   
+  end
 
-    respond_to do |format|
+  def handle_traditional_update
+     respond_to do |format|
       if @user.update_without_confirmation(params[:user])
         format.html { redirect_to @user, notice: 'Erfolgreich gespeichert!' }
         format.json { head :no_content }
@@ -169,6 +176,10 @@ class UsersController < ApplicationController
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
+  end
+  
+  def handle_openid_update
+    
   end
 
   # DELETE /users/1

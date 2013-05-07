@@ -2,3 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#openid_url, #user_openid_url {
+  background: url(/images/openid-login-bg.png) no-repeat #252525 5px;
+  padding-left: 25px;
+}

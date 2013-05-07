@@ -223,13 +223,14 @@ end
       # check if game is over
       if v == m
       game.handle_game_finished
+      return nil
       else
         c = Contract.new
       c.game = game
       c.murderer = m
       c.victim = v
       c.save
-      c
+      return c
       end
     end
   end
@@ -241,7 +242,7 @@ end
   def suicide_in(game)
     g = Game.find(game)
     new_contract = remove_from_contractchain_in(g)
-    if new_contract
+    if !new_contract.nil?
       ContractMailer.new_contract(new_contract).deliver
     end
     c = Contract.new

@@ -22,7 +22,7 @@
   .two_column
     #one.alternate
       %h2
-        Traditionelle Registrierung
+        Traditionell
       .form_row
         = f.label :email
         .field= f.email_field :email
@@ -37,7 +37,7 @@
         .field= f.password_field :password_confirmation
     #two.alternate
       %h2
-        oder OpenID Registrierung
+        oder mit OpenID
       .form_row
         =f.label(:openid_url, "OpenID URL")
         .field= f.text_field :openid_url
