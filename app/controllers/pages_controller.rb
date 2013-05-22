@@ -30,6 +30,10 @@ class PagesController < ApplicationController
     
   end
   
+  def invite
+    
+  end
+  
   def password_reset
      if logged_in?
       redirect_to :overview, notice: "Du bist eingeloggt und kannst dein Passwort nicht zurücksetzen."

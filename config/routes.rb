@@ -1,9 +1,16 @@
 MurdererGame::Application.routes.draw do
 
+  get "invitations/init_facebook_invite"
+
+  get "invitations/facebook_invite_callback"
+
+  get "invitations/email_invitation"
+
   get "index" => "pages#index", :as => "index"
   get "overview" => "pages#overview", :as => "overview"
   get "rules" => "pages#rules", :as => "rules"
   get "impressum" => "pages#impressum", :as => "impressum"
+  get "invite" => "pages#invite", :as => "invite"
   get "about_us" => "pages#about_us", :as => "about_us"
   get "supporters" => "pages#supporters", :as => "supporters"
   get "reset_password" => "pages#password_reset", as: "password_reset"

@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   end
   before_create :generate_activation
   before_destroy :clear_files
-  attr_accessible :course, :email, :first_name, :image, :last_name, :password, :password_confirmation, :email_confirmation, :term, :last_login, :deleted_at, :activation_token, :openid_url
+  attr_accessible :course, :email, :first_name, :image, :last_name, :password, :password_confirmation, :email_confirmation, :term, :last_login, :deleted_at, :activation_token, :openid_url, :facebook_id
   has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>", :large => "800x600" }
   validates_presence_of :first_name
   validates_presence_of :last_name
@@ -44,6 +44,7 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :unless => :openid_url?
   validates_presence_of :openid_url, :on => :create, :unless => :email?
   validates_uniqueness_of :email
+  validates_uniqueness_of :facebook_id, allow_blank: true, allow_nil: true, :case_sensitive => false
   validates_uniqueness_of :openid_url, allow_blank: true, allow_nil: true, :case_sensitive => false
   validates :term, presence: true, numericality: {greater_than_or_equal: 1, only_integer: true}
 

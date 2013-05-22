@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130504183028) do
+ActiveRecord::Schema.define(:version => 20130521074951) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "user_id"
@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(:version => 20130504183028) do
     t.string   "email"
     t.string   "password_hash"
     t.string   "password_salt"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(:version => 20130504183028) do
     t.datetime "deleted_at"
     t.string   "activation_token"
     t.string   "openid_url"
+    t.integer  "facebook_id",        :limit => 8
   end
 
 end
