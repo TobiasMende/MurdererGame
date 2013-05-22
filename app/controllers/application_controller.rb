@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
   before_filter :require_login
   helper_method :current_user
 
+def oauth
+    @oauth ||= Koala::Facebook::OAuth.new(530109983701979, "2b0d3f2f4d7889efe9980a1fffff5211")
+  end
+
 private
 
 def require_login

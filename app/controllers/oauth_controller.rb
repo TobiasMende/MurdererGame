@@ -1,7 +1,7 @@
 # coding: utf-8
 class OauthController < ApplicationController
   def init_default
-    redirect_to oauth.url_for_oauth_code(:permissions => "publish_stream")
+    redirect_to oauth.url_for_oauth_code(:permissions => "publish_stream", :callback => oauth_callback_default_url)
   end
 
   def callback_default
@@ -37,9 +37,4 @@ class OauthController < ApplicationController
     end
   end
 
-  protected
-
-  def oauth
-    @oauth ||= Koala::Facebook::OAuth.new(530109983701979, "2b0d3f2f4d7889efe9980a1fffff5211", oauth_callback_default_url)
-  end
 end
