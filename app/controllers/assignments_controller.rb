@@ -19,17 +19,14 @@ class AssignmentsController < ApplicationController
   
   def post
       a = Assignment.find(params[:id])
-    oauth = Koala::Facebook::OAuth.new(530109983701979, "2b0d3f2f4d7889efe9980a1fffff5211", post_assignment_url(a))
-      puts "2: "+oauth.oauth_callback_url unless oauth.oauth_callback_url.nil?
-      oauth.url_for_access_token(params[:code])
-      puts "3: "+oauth.oauth_callback_url unless oauth.oauth_callback_url.nil?
-      token = oauth.get_access_token(params[:code])
-      puts "4: "+oauth.oauth_callback_url unless oauth.oauth_callback_url.nil?
+      oauth(post_assignment_url(a)).url_for_access_token(params[:code])
+      token = oauth(post_assignment_url(a)).get_access_token(params[:code])
       unless a.nil? || token.nil?
         @graph = Koala::Facebook::API.new(token)
-        @graph.put_connections("me", "feed", :message => "ist dem Spiel "+a.game.title+" beigetreten.")
+        @graph.put_connections("me", "feed", :message => "ist dem Spiel "+a.game.title+" beigetreten.", :link => game_url(a.game))
         
       end
+      flash[:notice] = "Teilnahme erfolgreich!"
       unless a.nil?
         redirect_to game_path(a.game)
       else

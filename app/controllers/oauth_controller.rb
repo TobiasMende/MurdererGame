@@ -1,13 +1,12 @@
 # coding: utf-8
 class OauthController < ApplicationController
   def init_default
-    redirect_to oauth.url_for_oauth_code(:permissions => "publish_stream", :callback => oauth_callback_default_url)
+    redirect_to oauth(oauth_callback_default_url).url_for_oauth_code(:permissions => "publish_stream")
   end
 
   def callback_default
     #TODO delete debug statements
-    token = oauth.get_access_token(params[:code], :permissions => "publish_stream",:callback => oauth_callback_default_url)
-    puts token
+    token = oauth(oauth_callback_default_url).get_access_token(params[:code], :permissions => "publish_stream")
     respond_to do |format|
       if !token.nil?
         @graph = Koala::Facebook::API.new(token)

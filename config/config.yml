@@ -4,6 +4,8 @@ development:
   from_mail: "emgtest@tobsolution.de"
   support_mail: "support@tobsolution.de"
   default_name: "EPIC MÖRDERSPIEL"
+  facebook_app_id: 12345
+  facebook_app_secret: abcd
 
 test:
   domain: "localhost:3000"
@@ -11,6 +13,8 @@ test:
   from_mail: "noreply@epic-mörderspiel.de"
   support_mail: "support@epic-mörderspiel.de"
   default_name: "EPIC MÖRDERSPIEL"
+  facebook_app_id: 12345
+  facebook_app_secret: abcd
 
 production:
   domain: "epic-mörderspiel.de"
@@ -18,3 +22,5 @@ production:
   from_mail: "noreply@xn--epic-mrderspiel-etb.de"
   support_mail: "support@epic-mörderspiel.de"
   default_name: "EPIC MÖRDERSPIEL"
+  facebook_app_id: 12345
+  facebook_app_secret: abcd
