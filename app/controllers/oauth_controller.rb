@@ -34,6 +34,6 @@ class OauthController < ApplicationController
   protected
 
   def oauth
-    @oauth = Koala::Facebook::OAuth.new(530109983701979, "2b0d3f2f4d7889efe9980a1fffff5211", oauth_callback_default_url)
+    @oauth ||= Koala::Facebook::OAuth.new(530109983701979, "2b0d3f2f4d7889efe9980a1fffff5211", oauth_callback_default_url)
   end
 end
