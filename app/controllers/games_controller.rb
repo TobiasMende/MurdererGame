@@ -47,7 +47,8 @@ class GamesController < ApplicationController
     if a.save
       flash[:notice] = "Teilnahme erfolgreich!"
       unless current_user.facebook_id.nil?
-        url = oauth.url_for_oauth_code(:permissions => "publish_stream", :callback => post_assignment_url(a))
+        oauth = Koala::Facebook::OAuth.new(530109983701979, "2b0d3f2f4d7889efe9980a1fffff5211", post_assignment_url(a))
+        url = oauth.url_for_oauth_code(:permissions => "publish_stream")
         puts "1: "+oauth.oauth_callback_url unless oauth.oauth_callback_url.nil?
         redirect_to url
       else

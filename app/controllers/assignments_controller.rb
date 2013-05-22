@@ -19,8 +19,9 @@ class AssignmentsController < ApplicationController
   
   def post
       a = Assignment.find(params[:id])
+    oauth = Koala::Facebook::OAuth.new(530109983701979, "2b0d3f2f4d7889efe9980a1fffff5211", post_assignment_url(a))
       puts "2: "+oauth.oauth_callback_url unless oauth.oauth_callback_url.nil?
-      oauth.url_for_access_token(params[:code], :callback => post_assignment_url(a))
+      oauth.url_for_access_token(params[:code])
       puts "3: "+oauth.oauth_callback_url unless oauth.oauth_callback_url.nil?
       token = oauth.get_access_token(params[:code])
       puts "4: "+oauth.oauth_callback_url unless oauth.oauth_callback_url.nil?
