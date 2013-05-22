@@ -39,6 +39,7 @@ gem "colorbox-rails"
 gem "cocaine", "~> 0.4.2"
 gem "bcrypt-ruby", require: "bcrypt"
 gem "ruby-openid", require: "openid"
+gem "koala", "~> 1.7.0rc1"
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

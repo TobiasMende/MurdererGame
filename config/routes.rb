@@ -1,5 +1,9 @@
 MurdererGame::Application.routes.draw do
 
+  get "oauth/init_default"
+
+  get "oauth/callback_default"
+
   get "invitations/init_facebook_invite"
 
   get "invitations/facebook_invite_callback"
