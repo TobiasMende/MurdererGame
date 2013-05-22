@@ -53,7 +53,7 @@ class GamesController < ApplicationController
       end
     end
 
-    def post_game_assignment
+    def post_assignment
       a = Assignment.find(params[:id])
       puts a.to_yaml
       token = oauth.get_access_token(params[:code])
