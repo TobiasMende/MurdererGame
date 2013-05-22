@@ -15,19 +15,26 @@ class OauthController < ApplicationController
         puts profile
         id = profile[:id]
         if id.nil?
+          puts "No Facebook ID was returned!"
           format.html { redirect_to edit_user_path(current_user), error: 'Die Verknüpfung mit Facebook ist fehlgeschlagen!' }
+          format.json { render json: edit_user_path(current_user), status: :unprocessable_entity, location: :overview }
         else
-          current_user.facebook_id = id
+          current_user.facebook_id = id.to_i
+          puts "Current User: "+current_user.to_str
           if current_user.save
+            puts "Saving was successful"
             format.html { redirect_to edit_user_path(current_user), notice: 'Dein Account wurde erfolgreich mit Facebook verknüpft.' }
           else
+            puts "An error occured while saving current user."
             format.html { redirect_to edit_user_path(current_user), error: 'Ein Fehler ist aufgetreten. Bitte versuche es erneut!' }
+            format.json { render json: edit_user_path(current_user), status: :unprocessable_entity, location: :overview }
           end
         end
       else
         format.html { redirect_to edit_user_path(current_user), error: 'Die Verknüpfung mit Facebook ist fehlgeschlagen!' }
+        format.json { render json: edit_user_path(current_user), status: :unprocessable_entity, location: :overview }
       end
-      format.json { render json: edit_user_path(current_user), status: :updated, location: :overview }
+      
     end
   end
 
