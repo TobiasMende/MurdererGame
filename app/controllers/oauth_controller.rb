@@ -6,7 +6,7 @@ class OauthController < ApplicationController
 
   def callback_default
     #TODO delete debug statements
-    token = oauth.get_access_token(params[:code])
+    token = oauth.get_access_token(params[:code], :callback => oauth_callback_default_url)
     puts token
     respond_to do |format|
       if !token.nil?

@@ -56,7 +56,7 @@ class GamesController < ApplicationController
     def post_assignment
       a = Assignment.find(params[:id])
       puts a.to_yaml
-      token = oauth.get_access_token(params[:code])
+      token = oauth.get_access_token(params[:code], :callback => post_game_assignment_url(a))
       unless a.nil? || token.nil?
         @graph = Koala::Facebook::API.new(token)
         @graph.put_connections("me", "feed", :message => "ist dem Spiel "+a.game.title+" beigetreten.")
