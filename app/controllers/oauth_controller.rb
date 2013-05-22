@@ -13,7 +13,7 @@ class OauthController < ApplicationController
         @graph = Koala::Facebook::API.new(token)
         profile = @graph.get_object("me")
         puts profile
-        id = profile[:id]
+        id = profile["id"]
         if id.nil?
           puts "No Facebook ID was returned!"
           format.html { redirect_to edit_user_path(current_user), error: 'Die Verknüpfung mit Facebook ist fehlgeschlagen!' }
