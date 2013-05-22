@@ -27,8 +27,8 @@ class User < ActiveRecord::Base
   attr_accessor :password
   before_save :encrypt_password
   before_save do
-    self.email.downcase!
-    self.openid_url.downcase!
+    self.email.downcase! unless self.email.nil?
+    self.openid_url.downcase! unless self.openid_url.nil?
   end
   before_create :generate_activation
   before_destroy :clear_files
