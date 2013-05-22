@@ -47,27 +47,13 @@ class GamesController < ApplicationController
     if a.save
       flash[:notice] = "Teilnahme erfolgreich!"
       unless current_user.facebook_id.nil?
-        redirect_to oauth.url_for_oauth_code(:permissions => "publish_stream", :callback => post_game_assignment_url(a))
+        redirect_to oauth.url_for_oauth_code(:permissions => "publish_stream", :callback => post_assignment_url(a))
       else
         redirect_to :back
       end
     end
 
-    def post_assignment
-      a = Assignment.find(params[:id])
-      puts a.to_yaml
-      token = oauth.get_access_token(params[:code], :callback => post_game_assignment_url(a))
-      unless a.nil? || token.nil?
-        @graph = Koala::Facebook::API.new(token)
-        @graph.put_connections("me", "feed", :message => "ist dem Spiel "+a.game.title+" beigetreten.")
-        
-      end
-      unless a.nil?
-        redirect_to game_path(a.game)
-      else
-        redirect_to :overview
-      end
-    end
+    
 
   # respond_to do |format|
   # format.html # show.html.erb

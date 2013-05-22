@@ -29,7 +29,7 @@ MurdererGame::Application.routes.draw do
 
   get "games/open", :as => "open_games"
   get "games/:id/assign" => "games#assign", as: "new_assignment"
-    get "games/:id/post_assignment" => "games#post_assignment", as: "post_game_assignment"
+    get "assignments/:id/post" => "assignments#post", as: "post_assignment"
   get "games/:id/highscore" => "games#highscore", as: "highscore"
   get "contracts/:id/execute" => "contracts#execute", as: "contract_execution"
   get "contracts/:id/confirm" => "contracts#confirm", as: "contract_confirmation"
