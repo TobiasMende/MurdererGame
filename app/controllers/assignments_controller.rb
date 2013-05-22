@@ -19,11 +19,11 @@ class AssignmentsController < ApplicationController
   
   def post
       a = Assignment.find(params[:id])
-      puts "2: "+oauth.oauth_callback_url
+      puts "2: "+oauth.oauth_callback_url unless oauth.oauth_callback_url.nil?
       oauth.url_for_access_token(param[:code], post_assignment_url(a))
-      puts "3: "+oauth.oauth_callback_url
+      puts "3: "+oauth.oauth_callback_url unless oauth.oauth_callback_url.nil?
       token = oauth.get_access_token(params[:code])
-      puts "4: "+oauth.oauth_callback_url
+      puts "4: "+oauth.oauth_callback_url unless oauth.oauth_callback_url.nil?
       unless a.nil? || token.nil?
         @graph = Koala::Facebook::API.new(token)
         @graph.put_connections("me", "feed", :message => "ist dem Spiel "+a.game.title+" beigetreten.")

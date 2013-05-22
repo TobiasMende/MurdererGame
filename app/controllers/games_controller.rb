@@ -48,7 +48,7 @@ class GamesController < ApplicationController
       flash[:notice] = "Teilnahme erfolgreich!"
       unless current_user.facebook_id.nil?
         url = oauth.url_for_oauth_code(:permissions => "publish_stream", :callback => post_assignment_url(a))
-        puts "1: "+oauth.oauth_callback_url
+        puts "1: "+oauth.oauth_callback_url unless oauth.oauth_callback_url.nil?
         redirect_to url
       else
         redirect_to :back
