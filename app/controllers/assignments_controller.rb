@@ -16,21 +16,25 @@ class AssignmentsController < ApplicationController
 
   def edit
   end
-  
+
   def post
-      a = Assignment.find(params[:id])
-      oauth(post_assignment_url(a)).url_for_access_token(params[:code])
-      token = oauth(post_assignment_url(a)).get_access_token(params[:code])
-      unless a.nil? || token.nil?
-        @graph = Koala::Facebook::API.new(token)
-        @graph.put_connections("me", "feed", :message => "ist dem Spiel "+a.game.title+" beigetreten.", :link => game_url(a.game))
-        
-      end
-      flash[:notice] = "Teilnahme erfolgreich!"
-      unless a.nil?
-        redirect_to game_path(a.game)
-      else
-        redirect_to :overview
-      end
+    a = Assignment.find(params[:id])
+    oauth(post_assignment_url(a)).url_for_access_token(params[:code])
+    token = oauth(post_assignment_url(a)).get_access_token(params[:code])
+    unless a.nil? || token.nil?
+      @graph = Koala::Facebook::API.new(token)
+      @graph.put_connections("me", "feed", :message => "ist dem Spiel \""+a.game.title+"\" beigetreten.",
+                                           :link => game_url(a.game), 
+                                           :name => a.game.title, 
+                                           :caption => a.game.description, 
+                                           :description => "Worauf wartest du noch? - Melde dich an!")
+
     end
+    flash[:notice] = "Teilnahme erfolgreich!"
+    unless a.nil?
+      redirect_to game_path(a.game)
+    else
+      redirect_to :overview
+    end
+  end
 end
