@@ -20,7 +20,7 @@ class AssignmentsController < ApplicationController
   def post
       a = Assignment.find(params[:id])
       puts "2: "+oauth.oauth_callback_url unless oauth.oauth_callback_url.nil?
-      oauth.url_for_access_token(param[:code], post_assignment_url(a))
+      oauth.url_for_access_token(params[:code], post_assignment_url(a))
       puts "3: "+oauth.oauth_callback_url unless oauth.oauth_callback_url.nil?
       token = oauth.get_access_token(params[:code])
       puts "4: "+oauth.oauth_callback_url unless oauth.oauth_callback_url.nil?
