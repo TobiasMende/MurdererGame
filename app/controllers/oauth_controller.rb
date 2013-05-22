@@ -11,7 +11,7 @@ class OauthController < ApplicationController
     puts token
     respond_to do |format|
       if !token.nil?
-        @graph = Koala::Facebook::API.new(token[:access_token])
+        @graph = Koala::Facebook::API.new(token)
         profile = @graph.get_object("me")
         id = profile[:id]
         if id.nil?
