@@ -7,8 +7,7 @@ class OauthController < ApplicationController
   def callback_default
     #TODO delete debug statements
     puts params
-    result = oauth.fetch_token_string(params[:code])
-    token = oauth.parse_token_string(result)
+    token = @oauth.get_access_token(params[:code])
     puts token
     respond_to do |format|
       if !token.nil?
