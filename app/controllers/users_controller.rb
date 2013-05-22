@@ -64,6 +64,23 @@ class UsersController < ApplicationController
     end
     
   end
+  
+  def disconnect_facebook
+     @user = User.find(params[:id])
+    if @user != current_user
+      flash[:error] = "Du kannst nur dich selbst editieren!"
+      redirect_to :back
+    else
+      @user.facebook_id = nil
+      if @user.save
+        flash[:notice] = "Die Verbindung zu Facebook wurde erfolgreich entfernt!"
+      else
+        flash[:error] = "Ein Fehler ist aufgetreten. Bitte versuche es erneut."
+      end
+      redirect_to :back
+    end
+    
+  end
 
   # POST /users
   # POST /users.json

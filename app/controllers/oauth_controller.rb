@@ -12,7 +12,6 @@ class OauthController < ApplicationController
       if !token.nil?
         @graph = Koala::Facebook::API.new(token)
         profile = @graph.get_object("me")
-        puts profile
         id = profile["id"]
         if id.nil?
           puts "No Facebook ID was returned!"

@@ -62,3 +62,14 @@
     }
   }
 }
+
+ul.horizontal {
+  margin-left: 100px;
+  
+  li {
+    float: left;
+    display: inline-block;
+    margin-right: 50px;
+    margin-bottom: 20px;
+  }
+}

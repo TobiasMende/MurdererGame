@@ -1,4 +1,8 @@
 %h1 Profil editieren
-%p{:style => "text-align:center"}
-  #{link_to "mit Facebook verknüpfen", oauth_init_default_path} | #{link_to "Profil löschen", user_path(@user), :method => :delete, confirm: "Möchtest du dein Profil wirklich löschen?"}
+%ul.horizontal
+  - if @user.facebook_id.nil?
+    %li= link_to "mit Facebook verknüpfen", oauth_init_default_path
+  - else
+    %li= link_to "Von Facebook trennen", disconnect_facebook_user_path(@user)
+  %li= link_to "Profil löschen", user_path(@user), :method => :delete, confirm: "Möchtest du dein Profil wirklich löschen?"
 = render :partial => "form", locals: {submit_text: "Aktualisieren"}
