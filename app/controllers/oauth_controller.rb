@@ -20,7 +20,7 @@ class OauthController < ApplicationController
           format.json { render json: edit_user_path(current_user), status: :unprocessable_entity, location: :overview }
         else
           current_user.facebook_id = id.to_i
-          puts "Current User: "+current_user.to_str
+          puts "Current User: "+current_user.to_yaml
           if current_user.save
             puts "Saving was successful"
             format.html { redirect_to edit_user_path(current_user), notice: 'Dein Account wurde erfolgreich mit Facebook verknüpft.' }
