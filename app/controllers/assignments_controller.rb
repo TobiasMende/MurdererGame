@@ -16,11 +16,19 @@ class AssignmentsController < ApplicationController
 
   def edit
   end
+  
+  
 
   def post
     a = Assignment.find(params[:id])
-    oauth(post_assignment_url(a)).url_for_access_token(params[:code])
-    token = oauth(post_assignment_url(a)).get_access_token(params[:code])
+    unless params[:code].nil?
+      oauth(post_assignment_url(a)).url_for_access_token(params[:code])
+      info = oauth(post_assignment_url(a)).get_access_token_info(params[:code])
+      current_user.facebook_access_token = info["access_token"]
+      current_user.facebook_oauth_expires_at = DateTime.now + info["seconds_from_now"].to_i.seconds
+      current_user.save!
+    end
+      token = current_user.facebook_access_token
     unless a.nil? || token.nil?
       @graph = Koala::Facebook::API.new(token)
       @graph.put_connections("me", "feed", :message => "ist dem Spiel \""+a.game.title+"\" beigetreten.",

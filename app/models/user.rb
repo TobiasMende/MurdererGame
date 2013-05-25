@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   end
   before_create :generate_activation
   before_destroy :clear_files
-  attr_accessible :course, :email, :first_name, :image, :last_name, :password, :password_confirmation, :email_confirmation, :term, :last_login, :deleted_at, :activation_token, :openid_url, :facebook_id
+  attr_accessible :course, :email, :first_name, :image, :last_name, :password, :password_confirmation, :email_confirmation, :term, :last_login, :deleted_at, :activation_token, :openid_url, :facebook_id, :facebook_access_token, :facebook_oauth_expires_at
   has_attached_file :image, :styles => { :medium => "300x300>", :thumb => "100x100>", :large => "800x600" }
   validates_presence_of :first_name
   validates_presence_of :last_name
@@ -64,12 +64,13 @@ class User < ActiveRecord::Base
     where("last_login < ?", Date.today - since)
   end
 
-def self.find_by_openid_url(openid_url)
-  User.find(:all, :conditions => ["openid_url = lower(?)", openid_url]) 
-end
-def self.find_by_email(email)
-  User.find(:all, :conditions => ["email = lower(?)", email]) 
-end
+  def self.find_by_openid_url(openid_url)
+    User.find(:all, :conditions => ["openid_url = lower(?)", openid_url])
+  end
+
+  def self.find_by_email(email)
+    User.find(:all, :conditions => ["email = lower(?)", email])
+  end
 
   def last_login
     login = read_attribute(:last_login)
@@ -80,7 +81,11 @@ end
     end
 
   end
-
+  
+  def facebook_oauth_valid?
+    return self.facebook_id? && DateTime.now < self.facebook_oauth_expires_at
+  end
+  
   def name
     first_name+" "+last_name
   end
@@ -217,14 +222,14 @@ end
       if second.executed_at.nil?
       second.destroy
       else
-      second.proved_at = DateTime.now
+        second.proved_at = DateTime.now
       second.save
       end
 
       # check if game is over
       if v == m
-      game.handle_game_finished
-      return nil
+        game.handle_game_finished
+        return nil
       else
         c = Contract.new
       c.game = game

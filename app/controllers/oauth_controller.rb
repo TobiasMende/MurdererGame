@@ -5,8 +5,9 @@ class OauthController < ApplicationController
   end
 
   def callback_default
-    #TODO delete debug statements
-    token = oauth(oauth_callback_default_url).get_access_token(params[:code], :permissions => "publish_stream")
+    info = oauth(oauth_callback_default_url).get_access_token_info(params[:code], :permissions => "publish_stream")
+    token = info["access_token"]
+        
     respond_to do |format|
       if !token.nil?
         @graph = Koala::Facebook::API.new(token)
@@ -18,6 +19,8 @@ class OauthController < ApplicationController
           format.json { render json: edit_user_path(current_user), status: :unprocessable_entity, location: :overview }
         else
           current_user.facebook_id = id.to_i
+          current_user.facebook_access_token = token
+          current_user.facebook_oauth_expires_at = DateTime.now + info["seconds_from_now"].to_i.seconds
           puts "Current User: "+current_user.to_yaml
           if current_user.save
             puts "Saving was successful"
