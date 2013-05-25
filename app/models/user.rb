@@ -83,7 +83,7 @@ class User < ActiveRecord::Base
   end
   
   def facebook_oauth_valid?
-    return self.facebook_id? && DateTime.now < self.facebook_oauth_expires_at
+    return self.facebook_id? && self.facebook_oauth_expires_at? && DateTime.now < self.facebook_oauth_expires_at
   end
   
   def name
