@@ -24,6 +24,7 @@ class AssignmentsController < ApplicationController
     unless params[:code].nil?
       oauth(post_assignment_url(a)).url_for_access_token(params[:code])
       info = oauth(post_assignment_url(a)).get_access_token_info(params[:code])
+      puts info
       current_user.facebook_access_token = info["access_token"]
       current_user.facebook_oauth_expires_at = DateTime.now + info["seconds_from_now"].to_i.seconds
       current_user.save!

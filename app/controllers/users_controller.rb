@@ -72,6 +72,8 @@ class UsersController < ApplicationController
       redirect_to :back
     else
       @user.facebook_id = nil
+      @user.facebook_access_token = nil
+      @user.facebook_oauth_expires_at = nil
       if @user.save
         flash[:notice] = "Die Verbindung zu Facebook wurde erfolgreich entfernt!"
       else
