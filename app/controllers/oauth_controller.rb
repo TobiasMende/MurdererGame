@@ -20,7 +20,7 @@ class OauthController < ApplicationController
         else
           current_user.facebook_id = id.to_i
           current_user.facebook_access_token = token
-          current_user.facebook_oauth_expires_at = DateTime.now + info["seconds_from_now"].to_i.seconds
+          current_user.facebook_oauth_expires_at = DateTime.now + info["expires"].to_i.seconds
           puts "Current User: "+current_user.to_yaml
           if current_user.save
             puts "Saving was successful"
